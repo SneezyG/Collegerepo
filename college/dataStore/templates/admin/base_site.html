@@ -1,0 +1,34 @@
+{% extends "admin_interface:admin/base_site.html" %}
+{% load i18n %}
+{% load static %}
+{% block userlinks %}
+{{ block.super }}
+/ <form action="{% url 'set_language' %}" method="post" style="display:block; margin-top:8px;">{% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}">
+    <select name="language" style="background-color:#367588; border-color:#367588;" onchange="this.form.submit()">
+     {% get_current_language as LANGUAGE_CODE %}
+ 
+     {% if LANGUAGE_CODE == 'en' %}
+     <option value="en" selected> 🇬🇧 English </option>
+     {% else %}
+     <option value="en"> 🇬🇧 English </option>
+     {% endif %}
+
+    {% if LANGUAGE_CODE == 'zh-hans' %}
+    <option value="zh-hans" selected> 🇨🇳 Chinese </option>
+    {% else %}
+    <option value="zh-hans"> 🇨🇳 Chinese </option>
+    {% endif %}
+
+    {% if LANGUAGE_CODE == 'fr' %}
+    <option value="fr" selected> 🇲🇫French </option>
+    {% else %}
+    <option value="fr"> 🇲🇫French </option>
+    {% endif %}
+
+          
+    </select>
+</form>
+{% endblock %}
+
+                    

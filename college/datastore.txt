@@ -1,0 +1,16 @@
+User and their password for this database application
+admin: che153980
+First name= Ahmad
+Last name= Gbolahan
+Email = ahmadgbolly97@gmail.com
+
+
+
+editor1: syeoj£+0912
+editor2: gdheuw#-#-#
+
+
+user1: hanwue72821
+user2: wyeujs2782
+user3: eheji12839
+user4: gdhdj36£"#
