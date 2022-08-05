@@ -321,178 +321,178 @@ msgstr "Études générales"
 
 #: datastore/models.py:284 datastore/models.py:427
 msgid "college"
-msgstr ""
+msgstr "collège"
 
 #: datastore/models.py:287 datastore/models.py:512 datastore/models.py:618
 msgid "year"
-msgstr ""
+msgstr "an"
 
 #: datastore/models.py:302
 msgid "Degree"
-msgstr ""
+msgstr "Diplôme"
 
 #: datastore/models.py:323
 msgid "support"
-msgstr ""
+msgstr "Support"
 
 #: datastore/models.py:358
 msgid "Researcher"
-msgstr ""
+msgstr "Chercheur"
 
 #: datastore/models.py:370 datastore/models.py:477 datastore/models.py:511
 msgid "number"
-msgstr ""
+msgstr "Numéro"
 
 #: datastore/models.py:371
 msgid "title"
-msgstr ""
+msgstr "Titre"
 
 #: datastore/models.py:372 datastore/models.py:404
 msgid "agency"
-msgstr ""
+msgstr "agence"
 
 #: datastore/models.py:374
 msgid "investigator"
-msgstr ""
+msgstr "enquêteur"
 
 #: datastore/models.py:381
 msgid "Grant"
-msgstr ""
+msgstr "Accorder"
 
 #: datastore/models.py:394
 msgid "grant"
-msgstr ""
+msgstr "accorder"
 
 #: datastore/models.py:395
 msgid "date"
-msgstr ""
+msgstr "date"
 
 #: datastore/models.py:396
 msgid "end"
-msgstr ""
+msgstr "fin"
 
 #: datastore/models.py:397
 msgid "time"
-msgstr ""
+msgstr "temps"
 
 #: datastore/models.py:408
 msgid "Support"
-msgstr ""
+msgstr "Soutien"
 
 #: datastore/models.py:422 datastore/models.py:454 datastore/models.py:478
 #: datastore/models.py:522
 msgid "name"
-msgstr ""
+msgstr "Nom"
 
 #: datastore/models.py:423
 msgid "phone"
-msgstr ""
+msgstr "téléphoner"
 
 #: datastore/models.py:424 datastore/models.py:456
 msgid "office number"
-msgstr ""
+msgstr "numéro de bureau"
 
 #: datastore/models.py:425
 msgid "lecturer"
-msgstr ""
+msgstr "Maître de conférences"
 
 #: datastore/models.py:426
 msgid "Head of department"
-msgstr ""
+msgstr "Chef de département"
 
 #: datastore/models.py:433
 msgid "Department"
-msgstr ""
+msgstr "département"
 
 #: datastore/models.py:455
 msgid "dean"
-msgstr ""
+msgstr "doyen"
 
 #: datastore/models.py:463
 msgid "College"
-msgstr ""
+msgstr "Collège"
 
 #: datastore/models.py:479
 msgid "department"
-msgstr ""
+msgstr "département"
 
 #: datastore/models.py:480
 msgid "description"
-msgstr ""
+msgstr "la description"
 
 #: datastore/models.py:486
 msgid "Course"
-msgstr ""
+msgstr "Cours"
 
 #: datastore/models.py:506
 msgid "First Quarter"
-msgstr ""
+msgstr "Premier quart"
 
 #: datastore/models.py:507
 msgid "Second Quarter"
-msgstr ""
+msgstr "Deuxième quartier"
 
 #: datastore/models.py:508
 msgid "Third Quarter"
-msgstr ""
+msgstr "Troisième quart"
 
 #: datastore/models.py:509
 msgid "Fourth Quarter"
-msgstr ""
+msgstr "Quatrième trimestre"
 
 #: datastore/models.py:513 datastore/models.py:622
 msgid "quarter"
-msgstr ""
+msgstr "trimestre"
 
 #: datastore/models.py:514 datastore/models.py:563 datastore/models.py:610
 msgid "course"
-msgstr ""
+msgstr "cours"
 
 #: datastore/models.py:515 datastore/models.py:567 datastore/models.py:614
 msgid "teacher"
-msgstr ""
+msgstr "professeur"
 
 #: datastore/models.py:534
 msgid "Session"
-msgstr ""
+msgstr "Session"
 
 #: datastore/models.py:555 datastore/models.py:606
 msgid "session"
-msgstr ""
+msgstr "session"
 
 #: datastore/models.py:580
 msgid "Current Session"
-msgstr ""
+msgstr "Session actuelle"
 
 #: datastore/models.py:599
 msgid "Distinction"
-msgstr ""
+msgstr "Distinction"
 
 #: datastore/models.py:600
 msgid "Very good"
-msgstr ""
+msgstr "Très bien"
 
 #: datastore/models.py:601
 msgid "Good"
-msgstr ""
+msgstr "Bien"
 
 #: datastore/models.py:602
 msgid "Poor"
-msgstr ""
+msgstr "Pauvre"
 
 #: datastore/models.py:603
 msgid "Pass"
-msgstr ""
+msgstr "Passer"
 
 #: datastore/models.py:604
 msgid "Fail"
-msgstr ""
+msgstr "Échouer"
 
 #: datastore/models.py:607
 msgid "grade"
-msgstr ""
+msgstr "noter"
 
 #: datastore/models.py:638
 msgid "Old Session"
-msgstr ""
+msgstr "Ancienne session"
 
