@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
-import os
 from dotenv import load_dotenv
 from django.utils.translation import gettext_lazy as _
 load_dotenv()
@@ -113,8 +112,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'opeyeminasmat@gmail.com'
-EMAIL_HOST_PASSWORD = 'nqhrdbuogoiwxysp'
+EMAIL_HOST_USER = os.getenv('user')
+EMAIL_HOST_PASSWORD = os.getenv('pass')
 EMAIL_USE_SSL = False
 
 
