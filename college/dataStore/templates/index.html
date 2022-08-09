@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+<style>
+
+  @keyframes rotate {
+    from {
+      transform: rotateZ(0deg);
+      width: 180px;
+      height: 180px;
+    }
+    to {
+      transform: rotateZ(360deg);
+      width: 100px;
+      height: 100px;
+    }
+  }
+    
+  body {
+    background-color:lightgrey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 300px;
+  }
+  
+  img {
+    width: 180px;
+    height: 180px;
+    border-radius: 10px;
+    animation-name: rotate;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  
+  a {
+    position: absolute;
+    bottom: 200px;
+    color: #5072A7;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+  }
+</style>
+</head>
+
+
+<body>
+  
+  
+<img id="img" style="display: none" alt="site logo"/> 
+<a href="/data">DATASTORE</a>
+
+<script>
+
+ {% if logo %}
+ let img = document.getElementById('img');
+ img.src = "/media/" + "{{ logo }}";
+ img.style.display = "block";
+ {% endif %}
+   
+</script>
+
+
+
+</body>
+</html>

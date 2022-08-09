@@ -12,9 +12,15 @@ quater = {
   "4": [10, 11, 12]
 }
 
-
+"""
+All form class are only for admin form custom validation, nothing more, nothing less
+"""
 
 class LecturerAdminForm(forms.ModelForm):
+    """
+    ensure that only person object with lecturer category are added to the lecturer table.
+    """
+    
     def clean_person(self):
       data = self.cleaned_data["person"]
       if data.category != "Lect":
@@ -25,6 +31,16 @@ class LecturerAdminForm(forms.ModelForm):
 
 
 class StudentAdminForm(forms.ModelForm):
+    """
+    ensure that only person object with student or graduate category can be added to the student table.
+    
+    ensure the level of person object with graduate category is 5.
+    
+    ensure the level of person object with student category is not 5.
+    
+    ensure minor and major field don't contain the same department.
+    """
+    
     def clean(self):
       cleaned_data = super().clean()
       catg = cleaned_data.get('person').category
@@ -50,6 +66,10 @@ class StudentAdminForm(forms.ModelForm):
 
 
 class Grad_StudentAdminForm(forms.ModelForm):
+  """
+  ensure that only graduate student are added to this table.
+  """
+  
   def clean_student(self):
     data = self.cleaned_data["student"]
     if data.level != "Cls 5":
@@ -60,6 +80,10 @@ class Grad_StudentAdminForm(forms.ModelForm):
     
     
 class DegreeAdminForm(forms.ModelForm):
+  """
+  ensure that the year field is between 1900 to the previous year.
+  """
+  
   def clean_year(self):
     data = self.cleaned_data["year"]
     if data <= currentYear-1 and data >= 1900:
@@ -72,6 +96,10 @@ class DegreeAdminForm(forms.ModelForm):
 
 
 class ResearcherAdminForm(forms.ModelForm):
+  """
+  ensure the person field actually contain a valid graduate or lecturer object.
+  """
+  
   def clean_person(self):
     data = self.cleaned_data["person"]
     if data.category == "grad":
@@ -96,6 +124,10 @@ class ResearcherAdminForm(forms.ModelForm):
       
 
 class SessionAdminForm(forms.ModelForm):
+  """
+  ensure that the year field is between 1900 to the current year.
+  """
+  
   def clean_year(self):
     data = self.cleaned_data["year"]
     if data <= currentYear and data >= 1900:
@@ -107,6 +139,10 @@ class SessionAdminForm(forms.ModelForm):
       
 
 class CurrentSessionAdminForm(forms.ModelForm):
+  """
+  ensure that only session with current year and current quater can be added to this table.
+  """
+  
   def clean(self):
     cleaned_data = super().clean()
     year = cleaned_data.get('session').year
@@ -118,6 +154,10 @@ class CurrentSessionAdminForm(forms.ModelForm):
     
 
 class OldSessionAdminForm(forms.ModelForm):
+  """
+  ensure that the session is not current.
+  """
+  
   def clean_session(self):
     data = self.clean_data['session'].year
     if data <= currentYear-1 and data >= 1900:

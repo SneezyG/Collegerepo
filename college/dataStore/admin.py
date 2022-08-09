@@ -9,23 +9,30 @@ from .form import LecturerAdminForm, StudentAdminForm, DegreeAdminForm, SessionA
 from django.utils.translation import gettext_lazy as _
 
 
-# Register your models here.
 
+# customized the admin interface
 admin.site.empty_value_display = '(None)'
 admin.site.list_per_page = 50
 admin.site.site_header = _('College Data Store')
 admin.site.index_title = _("Data Store Management")
 admin.site.site_title = _("Data Admin")
-#admin.site.site_url = None
+
+
 
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
+    """
+    Register the django log table into the admin.
+    Add some customization and also define user access permission.
+    """
+    
     date_hierarchy = 'action_time'
 
     list_filter = [
         'user',
         'content_type',
-        'action_flag'
+        'action_flag',
+        'action_time'
     ]
 
 
@@ -72,6 +79,11 @@ class LogEntryAdmin(admin.ModelAdmin):
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
+  """
+    Register the person model into the admin.
+    Add some customization.
+  """
+    
   fieldsets = (
     (None, {
       'classes': ('extrapretty'),
@@ -97,6 +109,11 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(Lecturer)
 class LecturerAdmin(admin.ModelAdmin):
+  """
+    Register the lecturer model into the admin.
+    Add some customization.
+  """
+  
   form = LecturerAdminForm
   list_display = ('fullName', 'rank', 'officeAddress')
   list_filter = ('rank', 'salary')
@@ -110,6 +127,11 @@ class LecturerAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
+  """
+    Register the student model into the admin.
+    Add some customization.
+  """
+  
   form = StudentAdminForm
   fields = ('person', 'level', ('minor', 'major'), ('Reg', 'trspt'))
   filter_vertical = ('Reg', 'trspt')
@@ -123,6 +145,11 @@ class StudentAdmin(admin.ModelAdmin):
 
 @admin.register(Grad_Student)
 class Grad_StudentAdmin(admin.ModelAdmin):
+  """
+    Register the graduate model into the admin.
+    Add some customization.
+  """
+  
   form = Grad_StudentAdminForm
   filter_vertical = ('degrees', 'committee')
   list_display = ('fullName', 'advisor')
@@ -135,6 +162,11 @@ class Grad_StudentAdmin(admin.ModelAdmin):
 
 @admin.register(Degree)
 class DegreeAdmin(admin.ModelAdmin):
+  """
+    Register the degree model into the admin.
+    Add some customization.
+  """
+  
   form = DegreeAdminForm
   list_display = ('degree', 'college', 'year')
   list_filter = ('college', 'degree')
@@ -145,6 +177,11 @@ class DegreeAdmin(admin.ModelAdmin):
 
 @admin.register(Researcher)
 class ResearcherAdmin(admin.ModelAdmin):
+  """
+    Register the researcher model into the admin.
+    Add some customization.
+  """
+  
   form = ResearcherAdminForm
   filter_vertical = ('support',)
   list_display = ('fullName',)
@@ -157,6 +194,11 @@ class ResearcherAdmin(admin.ModelAdmin):
 
 @admin.register(Grant)
 class GrantAdmin(admin.ModelAdmin):
+  """
+    Register the grant model into the admin.
+    Add some customization.
+  """
+  
   list_display = ('title', 'agency', 'investigator')
   search_fields = ['title', 'agency']
   autocomplete_fields = ['investigator']
@@ -165,6 +207,11 @@ class GrantAdmin(admin.ModelAdmin):
 
 @admin.register(Support)
 class SupportAdmin(admin.ModelAdmin):
+  """
+    Register the support model into the admin.
+    Add some customization.
+  """
+  
   list_display = ('agency', 'date', 'end', 'time')
   list_filter = ('date', 'end')
   preserve_filters = False
@@ -175,6 +222,11 @@ class SupportAdmin(admin.ModelAdmin):
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
+  """
+    Register the department model into the admin.
+    Add some customization.
+  """
+  
   filter_vertical = ('lecturers',)
   list_display = ('Name', 'HOD', 'college')
   list_filter = ('college__name',)
@@ -186,6 +238,11 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(College)
 class CollegeAdmin(admin.ModelAdmin):
+  """
+    Register the college model into the admin.
+    Add some customization.
+  """
+  
   list_display = ('name', 'dean')
   list_filter = ('name',)
   preserve_filters = False
@@ -195,6 +252,11 @@ class CollegeAdmin(admin.ModelAdmin):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
+  """
+    Register the course model into the admin.
+    Add some customization.
+  """
+  
   list_display = ('name', 'Dept', 'des')
   search_fields = ['name',]
   autocomplete_fields = ['Dept']
@@ -203,6 +265,11 @@ class CourseAdmin(admin.ModelAdmin):
 
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
+  """
+    Register the session model into the admin.
+    Add some customization.
+  """
+  
   form = SessionAdminForm
   fields = ('no', ('year', 'qtr'), ('course', 'teacher'))
   
@@ -217,6 +284,11 @@ class SessionAdmin(admin.ModelAdmin):
 
 @admin.register(CurrentSession)
 class CurrentSessionAdmin(admin.ModelAdmin):
+  """
+    Register the currentSession model into the admin.
+    Add some customization.
+  """
+  
   form = CurrentSessionAdminForm
   list_display = ('course', 'teacher')
   search_fields = ['session__course__name']
@@ -226,6 +298,11 @@ class CurrentSessionAdmin(admin.ModelAdmin):
 
 @admin.register(OldSession)
 class OldSessionAdmin(admin.ModelAdmin):
+  """
+    Register the oldSession model into the admin.
+    Add some customization.
+  """
+  
   form = OldSessionAdminForm
   list_display = ('course', 'teacher', 'year', 'quarter', 'grade')
   search_fields = ['session__course__name']

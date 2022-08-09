@@ -22,7 +22,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
-    path('datastore/', admin.site.urls),
+    path('data/', admin.site.urls),
     path('', include(('datastore.urls', 'datastore'), namespace='app')),
     path('^admin/', admin.site.urls),
     path('doc/', include('django.contrib.admindocs.urls')),
