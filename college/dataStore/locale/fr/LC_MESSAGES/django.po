@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-03 11:39+0100\n"
+"POT-Creation-Date: 2022-08-14 16:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,51 +34,51 @@ msgstr "Administrateur de données"
 msgid "data store"
 msgstr "magasin de données"
 
-#: datastore/form.py:22
+#: datastore/form.py:27
 msgid "only lecturer can be added to this table"
 msgstr "seul le conférencier peut être ajouté à ce tableau"
 
-#: datastore/form.py:37
+#: datastore/form.py:52
 msgid "graduate must belong to level 5"
 msgstr "le diplômé doit appartenir au niveau 5"
 
-#: datastore/form.py:40
+#: datastore/form.py:55
 msgid "student cannot belong to level 5"
 msgstr "l'élève ne peut pas appartenir au niveau 5"
 
-#: datastore/form.py:43
+#: datastore/form.py:60
 msgid "a student can't have same department as minor and major"
 msgstr "un étudiant ne peut pas avoir le même département que mineur et majeur"
 
-#: datastore/form.py:48
+#: datastore/form.py:65
 msgid "only students and graduates can be added to this table"
 msgstr "seuls les étudiants et les diplômés peuvent être ajoutés à ce tableau"
 
-#: datastore/form.py:57
+#: datastore/form.py:78
 msgid "only graduate student can be added to this table"
 msgstr "seul un étudiant diplômé peut être ajouté à ce tableau"
 
-#: datastore/form.py:69 datastore/form.py:105
+#: datastore/form.py:94 datastore/form.py:138
 msgid "year can only be between 1900 to"
 msgstr "l'année ne peut être qu'entre 1900 et"
 
-#: datastore/form.py:81 datastore/form.py:85
+#: datastore/form.py:110 datastore/form.py:114
 msgid "this person is not a valid graduate"
 msgstr "cette personne n'est pas un diplôme valide"
 
-#: datastore/form.py:90
+#: datastore/form.py:119
 msgid "This person is not a valid lecturer"
 msgstr "Cette personne n'est pas un conférencier valide"
 
-#: datastore/form.py:95
+#: datastore/form.py:124
 msgid "person must be a graduate or lecturer"
 msgstr "la personne doit être diplômée ou conférencière"
 
-#: datastore/form.py:116
+#: datastore/form.py:153
 msgid "cannot add session because it is not current"
 msgstr "impossible d'ajouter une session car elle n'est pas en cours"
 
-#: datastore/form.py:127
+#: datastore/form.py:168
 msgid "only old session can be added"
 msgstr "seule l'ancienne session peut être ajoutée"
 
@@ -94,15 +94,15 @@ msgstr "femelle"
 msgid "private"
 msgstr "secrète"
 
-#: datastore/models.py:33 datastore/models.py:137
+#: datastore/models.py:33 datastore/models.py:139
 msgid "Lecturer"
 msgstr "Maître de conférences "
 
-#: datastore/models.py:34 datastore/models.py:204 datastore/models.py:223
+#: datastore/models.py:34 datastore/models.py:209 datastore/models.py:230
 msgid "Student"
 msgstr "Étudiant"
 
-#: datastore/models.py:35 datastore/models.py:164 datastore/models.py:252
+#: datastore/models.py:35 datastore/models.py:166 datastore/models.py:260
 msgid "Graduate"
 msgstr "Diplômé"
 
@@ -158,8 +158,8 @@ msgstr "Etat"
 msgid "zipcode"
 msgstr "code postal"
 
-#: datastore/models.py:58 datastore/models.py:116 datastore/models.py:178
-#: datastore/models.py:238 datastore/models.py:331
+#: datastore/models.py:58 datastore/models.py:117 datastore/models.py:181
+#: datastore/models.py:246 datastore/models.py:340
 msgid "full name"
 msgstr "nom et prénom"
 
@@ -211,7 +211,7 @@ msgstr ""
 msgid "Above $120,000"
 msgstr "Au-dessus de 120 000 $"
 
-#: datastore/models.py:108 datastore/models.py:167 datastore/models.py:322
+#: datastore/models.py:108 datastore/models.py:169 datastore/models.py:330
 msgid "person"
 msgstr "la personne"
 
@@ -231,268 +231,310 @@ msgstr "Adresse de bureau"
 msgid "office phone"
 msgstr "téléphone de bureau"
 
-#: datastore/models.py:160
+#: datastore/models.py:162
 msgid "Freshman"
 msgstr "Étudiant de première année"
 
-#: datastore/models.py:161
+#: datastore/models.py:163
 msgid "Sophomore"
 msgstr "Deuxième année"
 
-#: datastore/models.py:162
+#: datastore/models.py:164
 msgid "Junior"
 msgstr "Junior"
 
-#: datastore/models.py:163
+#: datastore/models.py:165
 msgid "Senior"
 msgstr "Senior"
 
-#: datastore/models.py:169
+#: datastore/models.py:171
 msgid "level"
 msgstr "niveau"
 
-#: datastore/models.py:170
+#: datastore/models.py:172
 msgid "minor"
 msgstr "mineure"
 
-#: datastore/models.py:171
+#: datastore/models.py:173
 msgid "major"
 msgstr "majeur"
 
-#: datastore/models.py:172
+#: datastore/models.py:174
 msgid "Registered_courses"
 msgstr "Cours_inscrits"
 
-#: datastore/models.py:173
+#: datastore/models.py:175
 msgid "transcript"
 msgstr "transcription"
 
-#: datastore/models.py:224 datastore/models.py:286
+#: datastore/models.py:231 datastore/models.py:294
 msgid "degree"
 msgstr "diplôme"
 
-#: datastore/models.py:226
+#: datastore/models.py:233
 msgid "advisor"
 msgstr "conseiller"
 
-#: datastore/models.py:227
+#: datastore/models.py:234
 msgid "committee"
 msgstr "Comité"
 
-#: datastore/models.py:271
+#: datastore/models.py:279
 msgid "Associate degree"
 msgstr "Diplôme d'associé"
 
-#: datastore/models.py:272
+#: datastore/models.py:280
 msgid "Bachelor's degree"
 msgstr "licence"
 
-#: datastore/models.py:273
+#: datastore/models.py:281
 msgid "Master's degree"
 msgstr "Une maîtrise"
 
-#: datastore/models.py:274
+#: datastore/models.py:282
 msgid "Doctoral degree"
 msgstr "Doctorat"
 
-#: datastore/models.py:277 datastore/models.py:446
+#: datastore/models.py:285 datastore/models.py:461
 msgid "Science"
 msgstr "La science"
 
-#: datastore/models.py:278 datastore/models.py:447
+#: datastore/models.py:286 datastore/models.py:462
 msgid "Engineering"
 msgstr "Ingénierie"
 
-#: datastore/models.py:279 datastore/models.py:448
+#: datastore/models.py:287 datastore/models.py:463
 msgid "Agriculture"
 msgstr "Agriculture"
 
-#: datastore/models.py:280 datastore/models.py:449
+#: datastore/models.py:288 datastore/models.py:464
 msgid "Medicine"
 msgstr "Médecine"
 
-#: datastore/models.py:281 datastore/models.py:450
+#: datastore/models.py:289 datastore/models.py:465
 msgid "Economic"
 msgstr "Économique"
 
-#: datastore/models.py:282 datastore/models.py:451
+#: datastore/models.py:290 datastore/models.py:466
 msgid "General studies"
 msgstr "Études générales"
 
-#: datastore/models.py:284 datastore/models.py:427
+#: datastore/models.py:292 datastore/models.py:440
 msgid "college"
 msgstr "collège"
 
-#: datastore/models.py:287 datastore/models.py:512 datastore/models.py:618
+#: datastore/models.py:295 datastore/models.py:528 datastore/models.py:636
 msgid "year"
 msgstr "an"
 
-#: datastore/models.py:302
+#: datastore/models.py:310
 msgid "Degree"
 msgstr "Diplôme"
 
-#: datastore/models.py:323
+#: datastore/models.py:331
 msgid "support"
 msgstr "Support"
 
-#: datastore/models.py:358
+#: datastore/models.py:367
 msgid "Researcher"
 msgstr "Chercheur"
 
-#: datastore/models.py:370 datastore/models.py:477 datastore/models.py:511
-msgid "number"
-msgstr "Numéro"
-
-#: datastore/models.py:371
+#: datastore/models.py:380
 msgid "title"
 msgstr "Titre"
 
-#: datastore/models.py:372 datastore/models.py:404
+#: datastore/models.py:381 datastore/models.py:415
 msgid "agency"
 msgstr "agence"
 
-#: datastore/models.py:374
+#: datastore/models.py:383
 msgid "investigator"
 msgstr "enquêteur"
 
-#: datastore/models.py:381
+#: datastore/models.py:390
 msgid "Grant"
 msgstr "Accorder"
 
-#: datastore/models.py:394
+#: datastore/models.py:404
 msgid "grant"
 msgstr "accorder"
 
-#: datastore/models.py:395
+#: datastore/models.py:405
 msgid "date"
 msgstr "date"
 
-#: datastore/models.py:396
+#: datastore/models.py:406
 msgid "end"
 msgstr "fin"
 
-#: datastore/models.py:397
+#: datastore/models.py:407
 msgid "time"
 msgstr "temps"
 
-#: datastore/models.py:408
+#: datastore/models.py:419
 msgid "Support"
 msgstr "Soutien"
 
-#: datastore/models.py:422 datastore/models.py:454 datastore/models.py:478
-#: datastore/models.py:522
+#: datastore/models.py:435 datastore/models.py:469 datastore/models.py:493
+#: datastore/models.py:538
 msgid "name"
 msgstr "Nom"
 
-#: datastore/models.py:423
+#: datastore/models.py:436
 msgid "phone"
 msgstr "téléphoner"
 
-#: datastore/models.py:424 datastore/models.py:456
+#: datastore/models.py:437 datastore/models.py:471
 msgid "office number"
 msgstr "numéro de bureau"
 
-#: datastore/models.py:425
+#: datastore/models.py:438
 msgid "lecturer"
 msgstr "Maître de conférences"
 
-#: datastore/models.py:426
+#: datastore/models.py:439
 msgid "Head of department"
 msgstr "Chef de département"
 
-#: datastore/models.py:433
+#: datastore/models.py:446
 msgid "Department"
 msgstr "département"
 
-#: datastore/models.py:455
+#: datastore/models.py:470
 msgid "dean"
 msgstr "doyen"
 
-#: datastore/models.py:463
+#: datastore/models.py:477
 msgid "College"
 msgstr "Collège"
 
-#: datastore/models.py:479
+#: datastore/models.py:492
+#, fuzzy
+#| msgid "course"
+msgid "course code"
+msgstr "Code de cours"
+
+#: datastore/models.py:494
 msgid "department"
 msgstr "département"
 
-#: datastore/models.py:480
+#: datastore/models.py:495
 msgid "description"
 msgstr "la description"
 
-#: datastore/models.py:486
+#: datastore/models.py:501
 msgid "Course"
 msgstr "Cours"
 
-#: datastore/models.py:506
+#: datastore/models.py:522
 msgid "First Quarter"
 msgstr "Premier quart"
 
-#: datastore/models.py:507
+#: datastore/models.py:523
 msgid "Second Quarter"
 msgstr "Deuxième quartier"
 
-#: datastore/models.py:508
+#: datastore/models.py:524
 msgid "Third Quarter"
 msgstr "Troisième quart"
 
-#: datastore/models.py:509
+#: datastore/models.py:525
 msgid "Fourth Quarter"
 msgstr "Quatrième trimestre"
 
-#: datastore/models.py:513 datastore/models.py:622
+#: datastore/models.py:529 datastore/models.py:640
 msgid "quarter"
 msgstr "trimestre"
 
-#: datastore/models.py:514 datastore/models.py:563 datastore/models.py:610
+#: datastore/models.py:530 datastore/models.py:580 datastore/models.py:628
 msgid "course"
 msgstr "cours"
 
-#: datastore/models.py:515 datastore/models.py:567 datastore/models.py:614
+#: datastore/models.py:531 datastore/models.py:584 datastore/models.py:632
 msgid "teacher"
 msgstr "professeur"
 
-#: datastore/models.py:534
+#: datastore/models.py:550
 msgid "Session"
 msgstr "Session"
 
-#: datastore/models.py:555 datastore/models.py:606
+#: datastore/models.py:572 datastore/models.py:624
 msgid "session"
 msgstr "session"
 
-#: datastore/models.py:580
+#: datastore/models.py:597
 msgid "Current Session"
 msgstr "Session actuelle"
 
-#: datastore/models.py:599
+#: datastore/models.py:617
 msgid "Distinction"
 msgstr "Distinction"
 
-#: datastore/models.py:600
+#: datastore/models.py:618
 msgid "Very good"
 msgstr "Très bien"
 
-#: datastore/models.py:601
+#: datastore/models.py:619
 msgid "Good"
 msgstr "Bien"
 
-#: datastore/models.py:602
+#: datastore/models.py:620
 msgid "Poor"
 msgstr "Pauvre"
 
-#: datastore/models.py:603
+#: datastore/models.py:621
 msgid "Pass"
 msgstr "Passer"
 
-#: datastore/models.py:604
+#: datastore/models.py:622
 msgid "Fail"
 msgstr "Échouer"
 
-#: datastore/models.py:607
+#: datastore/models.py:625
 msgid "grade"
 msgstr "noter"
 
-#: datastore/models.py:638
+#: datastore/models.py:656
 msgid "Old Session"
 msgstr "Ancienne session"
 
+#: datastore/templates/admin/base.html:42
+msgid "Welcome,"
+msgstr ""
+
+#: datastore/templates/admin/base.html:49
+msgid "Documentation"
+msgstr ""
+
+#: datastore/templates/admin/base.html:53
+msgid "Change password"
+msgstr ""
+
+#: datastore/templates/admin/base.html:57
+msgid "Log out"
+msgstr ""
+
+#: datastore/templates/admin/base.html:69
+msgid "Home"
+msgstr ""
+
+#: datastore/templates/registration/password_reset_email.html:2
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at COLLEGE DATA STORE."
+msgstr ""
+
+#: datastore/templates/registration/password_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr ""
+
+#: datastore/templates/registration/password_reset_email.html:8
+msgid "Your username, in case you’ve forgotten:"
+msgstr ""
+
+#: datastore/templates/registration/password_reset_email.html:10
+msgid "The COLLEGE DATA STORE team"
+msgstr ""
+
+#~ msgid "number"
+#~ msgstr "Numéro"

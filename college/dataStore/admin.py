@@ -83,6 +83,8 @@ class PersonAdmin(admin.ModelAdmin):
     }),
     )
     
+  #date_hierarchy = 'date'
+    
   list_display = ('fullName', 'category', 'address')
   
   list_filter = ('category', 'sex')
@@ -102,6 +104,8 @@ class LecturerAdmin(admin.ModelAdmin):
   """
   
   form = LecturerAdminForm
+
+  #date_hierarchy = 'date'
   list_display = ('fullName', 'rank', 'officeAddress')
   list_filter = ('rank', 'salary')
   preserve_filters = False
@@ -120,6 +124,8 @@ class StudentAdmin(admin.ModelAdmin):
   """
   
   form = StudentAdminForm
+
+  #date_hierarchy = 'date'
   fields = ('person', 'level', ('minor', 'major'), ('Reg', 'trspt'))
   filter_vertical = ('Reg', 'trspt')
   list_display = ('fullName', 'level', 'minor','major')
@@ -138,6 +144,8 @@ class Grad_StudentAdmin(admin.ModelAdmin):
   """
   
   form = Grad_StudentAdminForm
+  
+  #date_hierarchy = 'date'
   filter_vertical = ('degrees', 'committee')
   list_display = ('fullName', 'advisor')
   list_filter = ('degrees__college', 'degrees__degree')
@@ -155,6 +163,8 @@ class DegreeAdmin(admin.ModelAdmin):
   """
   
   form = DegreeAdminForm
+
+  #date_hierarchy = 'date'
   list_display = ('degree', 'college', 'year')
   list_filter = ('college', 'degree')
   preserve_filters = False
@@ -170,6 +180,8 @@ class ResearcherAdmin(admin.ModelAdmin):
   """
   
   form = ResearcherAdminForm
+
+  #date_hierarchy = 'date'
   filter_vertical = ('support',)
   list_display = ('fullName',)
   list_filter = ('support__date', 'support__end')
@@ -186,6 +198,7 @@ class GrantAdmin(admin.ModelAdmin):
     Add some customization.
   """
   
+  #date_hierarchy = 'date'
   list_display = ('title', 'agency', 'investigator')
   search_fields = ['title', 'agency']
   autocomplete_fields = ['investigator']
@@ -199,6 +212,7 @@ class SupportAdmin(admin.ModelAdmin):
     Add some customization.
   """
   
+  #date_hierarchy = 'date'
   list_display = ('agency', 'date', 'end', 'time')
   list_filter = ('date', 'end')
   preserve_filters = False
@@ -214,6 +228,7 @@ class DepartmentAdmin(admin.ModelAdmin):
     Add some customization.
   """
   
+  #date_hierarchy = 'date'
   filter_vertical = ('lecturers',)
   list_display = ('Name', 'HOD', 'college')
   list_filter = ('college__name',)
@@ -230,6 +245,7 @@ class CollegeAdmin(admin.ModelAdmin):
     Add some customization.
   """
   
+  #date_hierarchy = 'date'
   list_display = ('name', 'dean')
   list_filter = ('name',)
   preserve_filters = False
@@ -244,6 +260,7 @@ class CourseAdmin(admin.ModelAdmin):
     Add some customization.
   """
   
+  #date_hierarchy = 'date'
   list_display = ('name', 'Dept', 'des')
   search_fields = ['name',]
   autocomplete_fields = ['Dept']
@@ -258,10 +275,11 @@ class SessionAdmin(admin.ModelAdmin):
   """
   
   form = SessionAdminForm
-  fields = ('no', ('year', 'qtr'), ('course', 'teacher'))
+  fields = (('year', 'qtr'), ('course', 'teacher'))
   
   list_display  = ('name', 'year', 'qtr', 'teacher')
   
+  #date_hierarchy = 'date'
   list_filter = ('qtr',)
   preserve_filters = False
   search_fields = ['course__name']
@@ -277,6 +295,8 @@ class CurrentSessionAdmin(admin.ModelAdmin):
   """
   
   form = CurrentSessionAdminForm
+
+  #date_hierarchy = 'date'
   list_display = ('course', 'teacher')
   search_fields = ['session__course__name']
   autocomplete_fields = ['session']
@@ -291,6 +311,8 @@ class OldSessionAdmin(admin.ModelAdmin):
   """
   
   form = OldSessionAdminForm
+
+  #date_hierarchy = 'date'
   list_display = ('course', 'teacher', 'year', 'quarter', 'grade')
   search_fields = ['session__course__name']
   autocomplete_fields = ['session']

@@ -40,20 +40,22 @@ class StudentAdminForm(forms.ModelForm):
     
     ensure minor and major field don't contain the same department.
     """
-    
+      
     def clean(self):
       cleaned_data = super().clean()
       catg = cleaned_data.get('person').category
       minor = cleaned_data.get('minor')
       major = cleaned_data.get('major')
       level = cleaned_data.get('level')
-      if catg == "Std" or catg == "grad":
+      if catg == "Std" or catg == "Grad":
         if catg == "grad" and level != "Cls 5":
           text = _('graduate must belong to level 5')
           raise ValidationError(text)
         elif catg == "std" and self.level == "Cls 5":
            text = _("student cannot belong to level 5")
            raise ValidationError(text)
+        elif not self.minor and not self.major:
+          return cleaned_data
         elif self.minor == self.major:
           text = _("a student can't have same department as minor and major")
           raise ValidationError(text)
