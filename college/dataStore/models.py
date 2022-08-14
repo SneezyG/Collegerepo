@@ -32,7 +32,7 @@ class Person(models.Model):
   personType= (
       ("Lect", _("Lecturer")),
       ("Std", _("Student")),
-      ("grad", _("Graduate"))
+      ("Grad", _("Graduate"))
     )
 
     
@@ -97,18 +97,18 @@ class Lecturer(models.Model):
     )
     
   salaryType = (
-      ('1', _('Below $30,000')),
-      ('2', _('$30,000 - $60,000')),
-      ('3', _('$61,000 - $90,000')),
-      ('4', _('$90,000 - $120,000')),
-      ('5', _('Above $120,000'))
+      ('A', _('Below $30,000')),
+      ('B', _('$30,000 - $60,000')),
+      ('C', _('$61,000 - $90,000')),
+      ('D', _('$90,000 - $120,000')),
+      ('E', _('Above $120,000'))
    )
     
     
   person = models.OneToOneField(Person, on_delete=models.CASCADE, related_name="lecturer", verbose_name=_('person'))
   rank = models.CharField(max_length=3,
        choices=rankType, verbose_name=_('rank'))
-  salary = models.CharField(max_length=50, choices=salaryType, verbose_name=_('salary'))
+  salary = models.CharField(max_length=3, choices=salaryType, verbose_name=_('salary'))
   officeAddress = models.CharField(max_length=50, verbose_name=_('office address'))
   officePhone = models.CharField(max_length=15, verbose_name=_('office phone'))
   
@@ -122,11 +122,12 @@ class Lecturer(models.Model):
  
   def __str__(self):
     name = self.person
-    fullname = '%s %s %s(%s)' % (name.firstName, name.middleName, name.lastName, self.rank)
+    fullname = '%s %s %s' % (name.firstName, name.middleName, name.lastName)
     return fullname.title()
   
   
-  # over ride the save method
+  # over ride the save method 
+  #@property
   def save(self, *args, **kwargs):
     if self.person.category == "Lect":
       # calling the real save method
@@ -137,7 +138,7 @@ class Lecturer(models.Model):
   class Meta:
     verbose_name=_('Lecturer')
    
-   
+
    
 class Student(models.Model):
    """
@@ -204,6 +205,8 @@ class Student(models.Model):
       
    class Meta:
      verbose_name=_('Student')
+ 
+ 
        
 
 class Grad_Student(models.Model):
@@ -290,7 +293,7 @@ class Degree(models.Model):
   year = models.IntegerField(verbose_name=_('year'))
   
   def __str__(self):
-    deg = '%s in %s' % (self.degree, self.college)
+    deg = '%s(%s)' % (self.degree, self.college)
     return deg
   
   # over ride the default save method
@@ -327,7 +330,7 @@ class Researcher(models.Model):
          
   def __str__(self):
     name = self.person
-    fullname = '%s %s %s(%s)' % (name.firstName, name.middleName, name.lastName, name.category)
+    fullname = '%s %s %s(%s)' % (name.firstName, name.middleName, name.lastName)
     return fullname.title()
     
   def fullName(self):
@@ -361,6 +364,7 @@ class Researcher(models.Model):
   class Meta:
     verbose_name=_('Researcher')
         
+  
         
 class Grant(models.Model):
   
@@ -378,13 +382,14 @@ class Grant(models.Model):
       on_delete=models.CASCADE, verbose_name=_('investigator'))
       
   def __str__(self):
-    name = '%s by %s' % (self.title, self.agency)
+    name = '%s(%s)' % (self.title, self.agency)
     return name.title()
     
   class Meta:
     verbose_name=_('Grant')
       
       
+
 
 class Support(models.Model):
   
@@ -413,6 +418,8 @@ class Support(models.Model):
     verbose_name=_('Support')
     
 
+
+
 class Department(models.Model):
   
   """
@@ -437,6 +444,8 @@ class Department(models.Model):
   class Meta:
     verbose_name=_('Department')
     
+ 
+ 
     
 class College(models.Model):
   
@@ -461,13 +470,13 @@ class College(models.Model):
   office = models.IntegerField(verbose_name=_("office number"))
   
   def __str__(self):
-    name = 'faculty of %s' % (self.name)
-    return name
+    return self.name
   
   class Meta:
     verbose_name=_('College')
     
     
+  
   
 class Course(models.Model):
   
@@ -491,6 +500,7 @@ class Course(models.Model):
     verbose_name=_('Course')
     
     
+ 
   
 class Session(models.Model):
   
@@ -539,6 +549,7 @@ class Session(models.Model):
     verbose_name=_('Session')
     
     
+ 
     
 class CurrentSession(models.Model):
   
@@ -585,6 +596,7 @@ class CurrentSession(models.Model):
      verbose_name=_('Current Session')
      
      
+ 
   
 class OldSession(models.Model):
   
