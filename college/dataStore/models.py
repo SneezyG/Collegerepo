@@ -171,8 +171,8 @@ class Student(models.Model):
    person = models.OneToOneField(Person, on_delete=models.CASCADE, related_name="student", verbose_name=_('person'))
    level = models.CharField(max_length=5, 
        choices=clsType, verbose_name=_('level'))
-   minor = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, related_name="minor_students", verbose_name=_('minor'))
-   major = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, related_name="major_students", verbose_name=_('major'))
+   minor = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, blank=True, related_name="minor_students", verbose_name=_('minor'))
+   major = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, blank=True, related_name="major_students", verbose_name=_('major'))
    Reg = models.ManyToManyField("CurrentSession", related_name="students", verbose_name=_('Registered_courses'))
    trspt = models.ManyToManyField("OldSession", related_name="students", verbose_name=_('transcript'))
    date = models.DateField(auto_now_add=True)
@@ -199,7 +199,7 @@ class Student(models.Model):
         return "graduate must belong to level 5"
       elif catg == "std" and self.level == "Cls 5":
         return "student cannot belong to level 5"
-      elif not self.minor and not self.major:
+      elif not self.minor or not self.major:
         super().save(*args, **kwargs) 
       elif self.minor != self.major:
         super().save(*args, **kwargs) 
@@ -232,8 +232,7 @@ class Grad_Student(models.Model):
   student = models.OneToOneField(Student, on_delete=models.CASCADE, 
       related_name="grad", verbose_name=_('Student'))
   degrees = models.ManyToManyField('Degree', verbose_name=_('degree'))
-  advisor = models.ForeignKey(Lecturer, on_delete=models.SET_NULL, null=True,
-       related_name="advisee", verbose_name=_('advisor'))
+  advisor = models.ForeignKey(Lecturer, on_delete=models.SET_NULL, null=True, blank=True, related_name="advisee", verbose_name=_('advisor'))
   committee = models.ManyToManyField(Lecturer, related_name="thesis_student", verbose_name=_('committee'))
   date = models.DateField(auto_now_add=True)
   
@@ -338,7 +337,7 @@ class Researcher(models.Model):
          
   def __str__(self):
     name = self.person
-    fullname = '%s %s %s(%s)' % (name.firstName, name.middleName, name.lastName)
+    fullname = '%s %s %s' % (name.firstName, name.middleName, name.lastName)
     return fullname.title()
     
   def fullName(self):
@@ -400,11 +399,11 @@ class Support(models.Model):
   grant = models.OneToOneField(Grant, on_delete=models.CASCADE, verbose_name=_('grant'))
   date = models.DateField(verbose_name=_('date'))
   end = models.DateField(verbose_name=_('end'))
-  time = models.IntegerField(verbose_name=_('time'))
+  time = models.IntegerField(verbose_name=_('%time'))
   date = models.DateField(auto_now_add=True)
 
   def __str__(self):
-    name = '%s, %s to %s' % (self.grant.agency, self.date, self.end)
+    name = '%s, %s to %s' % (self.grant.title, self.date, self.end)
     return name
     
   def agency(self):
@@ -439,7 +438,7 @@ class Department(models.Model):
   
   
   def __str__(self):
-    return self.Name
+    return self.Name.title()
   
   class Meta:
     verbose_name=_('Department')
@@ -465,14 +464,14 @@ class College(models.Model):
       ("Gns", _("General studies"))
     )
   
-  name = models.CharField(max_length=30, choices=clgType, verbose_name=_('name'), unique=True)
+  name = models.CharField(max_length=30, choices=clgType, verbose_name=_('college'), unique=True)
   dean = models.CharField(max_length=30, unique=True, verbose_name=_('dean'))
   office = models.IntegerField(verbose_name=_("office number"))
   date = models.DateField(auto_now_add=True)
   
   
   def __str__(self):
-    return self.name
+    return self.get_name_display()
   
   class Meta:
     verbose_name=_('College')
@@ -530,18 +529,18 @@ class Session(models.Model):
   
   year = models.IntegerField(verbose_name=_('year'))
   qtr = models.CharField(max_length=1, choices=qtrType, verbose_name=_('quarter'))
-  course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, verbose_name=_('course'))
-  teacher = models.ForeignKey(Researcher, on_delete=models.SET_NULL, null=True, verbose_name=_('teacher'))
+  course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('course'))
+  teacher = models.ForeignKey(Researcher, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('teacher'))
   date = models.DateField(auto_now_add=True)
   
   
   def __str__(self):
-    sect = '%s (%s, %s)' % (self.course.name, self.qtr, self.year)
+    sect = '%s (%s, %s)' % (self.course.name, self.get_qtr_display(), self.year)
     return sect
 
   def name(self):
     verbose_name=_('name')
-    return course.name.capitalize()
+    return self.course.name.title()
   
   # over ride the default save method
   def save(self, *args, **kwargs):
@@ -579,16 +578,16 @@ class CurrentSession(models.Model):
    
    
    def __str__(self):
-      sect = '%s (%s, %s)' % (self.session.course.name, self.session.qtr, self.session.year)
+      sect = '%s (%s, %s)' % (self.session.course.name, self.session.get_qtr_display(), self.session.year)
       return sect
 
    def course(self):
      verbose_name=_('course')
-     return self.session.course.name.capitalize()
+     return self.session.course.name.title()
      
    def teacher(self):
      verbose_name=_('teacher')
-     return self.session.course.teacher.capitalize()
+     return self.session.teacher
     
    # over ride the default save method
    def save(self, *args, **kwargs):
@@ -633,22 +632,22 @@ class OldSession(models.Model):
    
    def course(self):
      verbose_name=_('course')
-     return self.session.course.name.capitalize()
+     return self.session.course.name.title()
      
    def teacher(self):
      verbose_name=_('teacher')
-     return self.session.course.teacher.capitalize()
+     return self.session.teacher
    
    def year(self):
      verbose_name=_('year')
-     return self.session.qtr()
+     return self.session.year
      
-   def quarter():
+   def quarter(self):
      verbose_name=_('quarter')
-     return self.session.qtr()
+     return self.session.get_qtr_display()
    
    def __str__(self):
-      sect = '%s (%s, %s)' % (self.session.course.name, self.session.qtr, self.session.year)
+      sect = '%s (%s, %s)' % (self.session.course.name, self.session.get_qtr_display(), self.session.year)
       return sect
    
    # over ride the default save method

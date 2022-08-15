@@ -43,20 +43,24 @@ class StudentAdminForm(forms.ModelForm):
       
     def clean(self):
       cleaned_data = super().clean()
-      catg = cleaned_data.get('person').category
+      person = cleaned_data.get('person')
       minor = cleaned_data.get('minor')
       major = cleaned_data.get('major')
       level = cleaned_data.get('level')
+      try:
+         catg = person.category
+      except:
+         return cleaned_data
       if catg == "Std" or catg == "Grad":
-        if catg == "grad" and level != "Cls 5":
+        if catg == "Grad" and level != "Cls 5":
           text = _('graduate must belong to level 5')
           raise ValidationError(text)
-        elif catg == "std" and self.level == "Cls 5":
+        elif catg == "Std" and level == "Cls 5":
            text = _("student cannot belong to level 5")
            raise ValidationError(text)
-        elif not self.minor and not self.major:
+        elif not minor or not major:
           return cleaned_data
-        elif self.minor == self.major:
+        elif minor == major:
           text = _("a student can't have same department as minor and major")
           raise ValidationError(text)
         else:
@@ -104,25 +108,12 @@ class ResearcherAdminForm(forms.ModelForm):
   
   def clean_person(self):
     data = self.cleaned_data["person"]
-    if data.category == "grad":
-      if data.student:
-        if not data.student.grad:
-          text = _("this person is not a valid graduate")
-          raise ValidationError(text)
+    if data.category == "Grad" or data.category == "Lect":
         return data
-      else:
-        text = _("this person is not a valid graduate")
-        raise ValidationError(text)
-        
-    elif data.category == "Lect":
-      if not data.lecturer:
-        text = _("This person is not a valid lecturer")
-        raise ValidationError(text)
-      return data
+    text = _("invalid person, person not a lecturer or graduate")
+    raise ValidationError(text)
+    
 
-    else:
-      text = _("person must be a graduate or lecturer")
-      raise ValidationError(text)
       
 
 class SessionAdminForm(forms.ModelForm):
@@ -133,7 +124,7 @@ class SessionAdminForm(forms.ModelForm):
   def clean_year(self):
     data = self.cleaned_data["year"]
     if data <= currentYear and data >= 1900:
-      return date
+      return data
     else:
       text = _("year can only be between 1900 to")
       warn = "%s %s" % (text, currentYear)
@@ -147,12 +138,15 @@ class CurrentSessionAdminForm(forms.ModelForm):
   
   def clean(self):
     cleaned_data = super().clean()
-    year = cleaned_data.get('session').year
-    qtr = cleaned_data.get('session').qtr
-    if year != currentYear and currentMonth not in quater[qtr]:
-      text = _("cannot add session because it is not current")
-      raise ValidationError(text)
-    return clean_data
+    try:
+      year = cleaned_data.get('session').year
+      qtr = cleaned_data.get('session').qtr
+    except:
+      return cleaned_data
+    if year == currentYear and currentMonth in quater[qtr]:
+         return cleaned_data
+    text = _("cannot add session because it is not current")
+    raise ValidationError(text)
     
 
 class OldSessionAdminForm(forms.ModelForm):
@@ -161,8 +155,9 @@ class OldSessionAdminForm(forms.ModelForm):
   """
   
   def clean_session(self):
-    data = self.clean_data['session'].year
-    if data <= currentYear-1 and data >= 1900:
+    data = self.cleaned_data['session']
+    year = data.year
+    if year <= currentYear-1 and year >= 1900:
        return data
     else:
       text = _("only old session can be added")
