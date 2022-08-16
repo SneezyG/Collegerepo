@@ -51,7 +51,7 @@ class Person(models.Model):
   city = models.CharField(max_length=30, verbose_name=_('city'))
   state = models.CharField(max_length=30, verbose_name=_('state'))
   zipcode = models.IntegerField(verbose_name=_('zipcode'))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
   
   
   def fullName(self):
@@ -112,7 +112,7 @@ class Lecturer(models.Model):
   salary = models.CharField(max_length=3, choices=salaryType, verbose_name=_('salary'))
   officeAddress = models.CharField(max_length=50, verbose_name=_('office address'))
   officePhone = models.CharField(max_length=15, verbose_name=_('office phone'))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
   
   def fullName(self):
     "Returns the person's full name."
@@ -175,7 +175,7 @@ class Student(models.Model):
    major = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, blank=True, related_name="major_students", verbose_name=_('major'))
    Reg = models.ManyToManyField("CurrentSession", related_name="students", verbose_name=_('Registered_courses'))
    trspt = models.ManyToManyField("OldSession", related_name="students", verbose_name=_('transcript'))
-   date = models.DateField(auto_now_add=True)
+   time = models.DateTimeField(auto_now_add=True)
    
    
    def fullName(self):
@@ -194,10 +194,10 @@ class Student(models.Model):
    # over ride the defaultsave method
    def save(self, *args, **kwargs):
     catg = self.person.category
-    if catg == "Std" or catg == "grad":
-      if catg == "grad" and self.level != "Cls 5":
+    if catg == "Std" or catg == "Grad":
+      if catg == "Grad" and self.level != "Cls 5":
         return "graduate must belong to level 5"
-      elif catg == "std" and self.level == "Cls 5":
+      elif catg == "Std" and self.level == "Cls 5":
         return "student cannot belong to level 5"
       elif not self.minor or not self.major:
         super().save(*args, **kwargs) 
@@ -234,7 +234,7 @@ class Grad_Student(models.Model):
   degrees = models.ManyToManyField('Degree', verbose_name=_('degree'))
   advisor = models.ForeignKey(Lecturer, on_delete=models.SET_NULL, null=True, blank=True, related_name="advisee", verbose_name=_('advisor'))
   committee = models.ManyToManyField(Lecturer, related_name="thesis_student", verbose_name=_('committee'))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
   
   
   
@@ -296,10 +296,10 @@ class Degree(models.Model):
   degree = models.CharField(max_length=3, 
         choices=degType, verbose_name=_('degree'))
   year = models.IntegerField(verbose_name=_('year'))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
   
   def __str__(self):
-    deg = '%s(%s)' % (self.degree, self.college)
+    deg = '%s(%s)' % (self.get_degree_display(), self.get_college_display())
     return deg
   
   # over ride the default save method
@@ -333,7 +333,7 @@ class Researcher(models.Model):
   person = models.OneToOneField(Person, 
       on_delete= models.CASCADE, verbose_name=_('person'))
   support = models.ManyToManyField("Support", verbose_name=_('support'))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
          
   def __str__(self):
     name = self.person
@@ -375,7 +375,7 @@ class Grant(models.Model):
   agency = models.CharField(max_length=30, verbose_name=_('agency'))
   investigator = models.ForeignKey(Lecturer, 
       on_delete=models.CASCADE, verbose_name=_('investigator'))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
       
   def __str__(self):
     name = '%s(%s)' % (self.title, self.agency)
@@ -400,7 +400,7 @@ class Support(models.Model):
   date = models.DateField(verbose_name=_('date'))
   end = models.DateField(verbose_name=_('end'))
   time = models.IntegerField(verbose_name=_('%time'))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
 
   def __str__(self):
     name = '%s, %s to %s' % (self.grant.title, self.date, self.end)
@@ -434,7 +434,7 @@ class Department(models.Model):
   lecturers = models.ManyToManyField(Lecturer, related_name="departments", verbose_name=_('lecturer'))
   HOD = models.OneToOneField(Lecturer, related_name="HOD_of", on_delete=models.CASCADE, verbose_name=_('Head of department'))
   college = models.ForeignKey("College", on_delete=models.CASCADE, related_name="departments", verbose_name=_('college'))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
   
   
   def __str__(self):
@@ -467,7 +467,7 @@ class College(models.Model):
   name = models.CharField(max_length=30, choices=clgType, verbose_name=_('college'), unique=True)
   dean = models.CharField(max_length=30, unique=True, verbose_name=_('dean'))
   office = models.IntegerField(verbose_name=_("office number"))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
   
   
   def __str__(self):
@@ -493,7 +493,7 @@ class Course(models.Model):
   name = models.CharField(max_length=30, unique=True, verbose_name=_('name'))
   Dept = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name=_('department'))
   des = models.TextField(verbose_name=_('description'))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
   
   
   def __str__(self):
@@ -531,7 +531,7 @@ class Session(models.Model):
   qtr = models.CharField(max_length=1, choices=qtrType, verbose_name=_('quarter'))
   course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('course'))
   teacher = models.ForeignKey(Researcher, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('teacher'))
-  date = models.DateField(auto_now_add=True)
+  time = models.DateTimeField(auto_now_add=True)
   
   
   def __str__(self):
@@ -574,7 +574,7 @@ class CurrentSession(models.Model):
    """
   
    session = models.OneToOneField(Session, on_delete=models.CASCADE, verbose_name=_('session'))
-   date = models.DateField(auto_now_add=True)
+   time = models.DateTimeField(auto_now_add=True)
    
    
    def __str__(self):
@@ -628,7 +628,7 @@ class OldSession(models.Model):
      )
    session = models.ForeignKey(Session, on_delete=models.CASCADE, verbose_name=_('session'))
    grade = models.CharField(max_length=1, choices=gradeType, verbose_name=_('grade'))
-   date = models.DateField(auto_now_add=True)
+   time = models.DateTimeField(auto_now_add=True)
    
    def course(self):
      verbose_name=_('course')
@@ -647,7 +647,7 @@ class OldSession(models.Model):
      return self.session.get_qtr_display()
    
    def __str__(self):
-      sect = '%s (%s, %s)' % (self.session.course.name, self.session.get_qtr_display(), self.session.year)
+      sect = '%s (%s, %s, %s)' % (self.session.course.name, self.session.get_qtr_display(), self.session.year, self.get_grade_display())
       return sect
    
    # over ride the default save method
