@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 # customized the admin interface
-admin.site.empty_value_display = '(None)'
+admin.site.empty_value_display = _('(None)')
 admin.site.list_per_page = 50
 admin.site.site_header = _('College Data Store')
 admin.site.index_title = _("Data Store Management")
@@ -21,6 +21,7 @@ admin.site.site_title = _("Data Admin")
 
 @admin.register(LogEntry)
 class LogEntryAdmin(admin.ModelAdmin):
+  
     """
     Register the django log table into the admin.
     Add some customization and also define user access permission.
@@ -66,6 +67,7 @@ class LogEntryAdmin(admin.ModelAdmin):
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
+  
   """
     Register the person model into the admin.
     Add some customization.
@@ -98,6 +100,7 @@ class PersonAdmin(admin.ModelAdmin):
 
 @admin.register(Lecturer)
 class LecturerAdmin(admin.ModelAdmin):
+  
   """
     Register the lecturer model into the admin.
     Add some customization.
@@ -118,6 +121,7 @@ class LecturerAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
+  
   """
     Register the student model into the admin.
     Add some customization.
@@ -138,6 +142,7 @@ class StudentAdmin(admin.ModelAdmin):
 
 @admin.register(Grad_Student)
 class Grad_StudentAdmin(admin.ModelAdmin):
+  
   """
     Register the graduate model into the admin.
     Add some customization.
@@ -146,17 +151,17 @@ class Grad_StudentAdmin(admin.ModelAdmin):
   form = Grad_StudentAdminForm
   
   date_hierarchy = 'time'
-  filter_vertical = ('degrees', 'committee')
   list_display = ('fullName', 'advisor')
   list_filter = ('degrees__degree',)
   preserve_filters = False
   search_fields = ['student__person__firstName', 'student__person__middleName', 'student__person__lastName']
-  autocomplete_fields = ['student', 'degrees', 'advisor', 'committee']
+  autocomplete_fields = ['student', 'advisor', 'committee']
 
 
 
 @admin.register(Degree)
 class DegreeAdmin(admin.ModelAdmin):
+  
   """
     Register the degree model into the admin.
     Add some customization.
@@ -168,12 +173,12 @@ class DegreeAdmin(admin.ModelAdmin):
   list_display = ('degree', 'college', 'year')
   list_filter = ('college', 'degree')
   preserve_filters = False
-  search_fields = ['college, degree']
 
 
 
 @admin.register(Researcher)
 class ResearcherAdmin(admin.ModelAdmin):
+  
   """
     Register the researcher model into the admin.
     Add some customization.
@@ -191,6 +196,7 @@ class ResearcherAdmin(admin.ModelAdmin):
 
 @admin.register(Grant)
 class GrantAdmin(admin.ModelAdmin):
+  
   """
     Register the grant model into the admin.
     Add some customization.
@@ -205,14 +211,15 @@ class GrantAdmin(admin.ModelAdmin):
 
 @admin.register(Support)
 class SupportAdmin(admin.ModelAdmin):
+  
   """
     Register the support model into the admin.
     Add some customization.
   """
   
   date_hierarchy = 'time'
-  list_display = ('agency', 'date', 'end', 'time')
-  list_filter = ('date', 'end')
+  list_display = ('agency', 'start', 'end', 'spend')
+  list_filter = ('start', 'end')
   preserve_filters = False
   search_fields = ['grant__agency',]
   autocomplete_fields = ['grant']
@@ -221,6 +228,7 @@ class SupportAdmin(admin.ModelAdmin):
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
+  
   """
     Register the department model into the admin.
     Add some customization.
@@ -232,12 +240,13 @@ class DepartmentAdmin(admin.ModelAdmin):
   list_filter = ('college__name',)
   preserve_filters = False
   search_fields = ['Name',]
-  autocomplete_fields = ['HOD', 'lecturers']
+  autocomplete_fields = ('HOD', 'lecturers')
 
 
 
 @admin.register(College)
 class CollegeAdmin(admin.ModelAdmin):
+  
   """
     Register the college model into the admin.
     Add some customization.
@@ -252,20 +261,22 @@ class CollegeAdmin(admin.ModelAdmin):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
+  
   """
     Register the course model into the admin.
     Add some customization.
   """
   
   date_hierarchy = 'time'
-  list_display = ('name', 'Dept', 'des')
-  search_fields = ['name',]
+  list_display = ('name', 'code', 'Dept', 'des')
+  search_fields = ('name', 'code',)
   autocomplete_fields = ['Dept']
 
 
 
 @admin.register(Session)
 class SessionAdmin(admin.ModelAdmin):
+  
   """
     Register the session model into the admin.
     Add some customization.
@@ -286,6 +297,7 @@ class SessionAdmin(admin.ModelAdmin):
 
 @admin.register(CurrentSession)
 class CurrentSessionAdmin(admin.ModelAdmin):
+  
   """
     Register the currentSession model into the admin.
     Add some customization.
@@ -302,6 +314,7 @@ class CurrentSessionAdmin(admin.ModelAdmin):
 
 @admin.register(OldSession)
 class OldSessionAdmin(admin.ModelAdmin):
+  
   """
     Register the oldSession model into the admin.
     Add some customization.

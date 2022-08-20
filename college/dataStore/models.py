@@ -20,7 +20,7 @@ class Person(models.Model):
   
   it is a generalization of :model:`dataStore.Lecturer` and :model:`dataStore.Student`.
   
-  There are two category of person(Lecturer and student)
+  There are three category of person(Lecturer, Student and Graduate)
   
   """
   
@@ -143,6 +143,7 @@ class Lecturer(models.Model):
 
    
 class Student(models.Model):
+  
    """
     Stores a single student data.
     
@@ -223,7 +224,7 @@ class Grad_Student(models.Model):
     
     Only class 5 student(graduate) can be added to this table.
     
-    It is related to :model:`dataStore.Degree` through Previous degree relationship(many to many).
+    It is related to :model:`dataStore.Degree` through Previous degrees relationship(many to many).
     
     It is related to :model:`dataStore.Lecturer` through advisor(many to one) and thesis committee(many to many) relationships
 
@@ -231,7 +232,7 @@ class Grad_Student(models.Model):
   
   student = models.OneToOneField(Student, on_delete=models.CASCADE, 
       related_name="grad", verbose_name=_('Student'))
-  degrees = models.ManyToManyField('Degree', verbose_name=_('degree'))
+  degrees = models.ManyToManyField('Degree', verbose_name=_('degrees'))
   advisor = models.ForeignKey(Lecturer, on_delete=models.SET_NULL, null=True, blank=True, related_name="advisee", verbose_name=_('advisor'))
   committee = models.ManyToManyField(Lecturer, related_name="thesis_student", verbose_name=_('committee'))
   time = models.DateTimeField(auto_now_add=True)
@@ -284,6 +285,7 @@ class Degree(models.Model):
       ("Mas", _("Master's degree")),
       ("Doc", _("Doctoral degree"))
     )
+    
   clgType = (
       ("Sci", _("Science")),
       ("Eng", _("Engineering")),
@@ -292,6 +294,7 @@ class Degree(models.Model):
       ("Econ", _("Economic")),
       ("Gns", _("General studies"))
     )
+    
   college = models.CharField(max_length=5, choices=clgType, verbose_name=_('college'))
   degree = models.CharField(max_length=3, 
         choices=degType, verbose_name=_('degree'))
@@ -299,7 +302,7 @@ class Degree(models.Model):
   time = models.DateTimeField(auto_now_add=True)
   
   def __str__(self):
-    deg = '%s(%s)' % (self.get_degree_display(), self.get_college_display())
+    deg = '%s in %s(%s)' % (self.get_degree_display(), self.get_college_display(), self.year)
     return deg
   
   # over ride the default save method
@@ -322,9 +325,9 @@ class Researcher(models.Model):
   
   It is the union of :model:`dataStore.lecturer` and :model:`dataStore.Grad_Student`.
   
-  Every Researcher object have a person object which it was created with(one to one relationship)
+  Every Researcher object have a person object which it was created with(one to one relationship).
   
-  Only person_lecturer and person_student_grad_std can be added to this table.
+  Only person object with lecturer or graduate category can be added to this table.
   
   It is related to :model:`dataStore.Support` through Grant-support relationship(many to many).
 
@@ -397,13 +400,13 @@ class Support(models.Model):
   """
   
   grant = models.OneToOneField(Grant, on_delete=models.CASCADE, verbose_name=_('grant'))
-  date = models.DateField(verbose_name=_('date'))
-  end = models.DateField(verbose_name=_('end'))
-  time = models.IntegerField(verbose_name=_('%time'))
+  start = models.DateField(verbose_name=_('start date'))
+  end = models.DateField(verbose_name=_('end date'))
+  spend = models.IntegerField(verbose_name=_('%time spend'))
   time = models.DateTimeField(auto_now_add=True)
 
   def __str__(self):
-    name = '%s, %s to %s' % (self.grant.title, self.date, self.end)
+    name = '%s, %s to %s' % (self.grant.title, self.start, self.end)
     return name
     
   def agency(self):
@@ -464,7 +467,7 @@ class College(models.Model):
       ("Gns", _("General studies"))
     )
   
-  name = models.CharField(max_length=30, choices=clgType, verbose_name=_('college'), unique=True)
+  name = models.CharField(max_length=30, choices=clgType, verbose_name=_('college'))
   dean = models.CharField(max_length=30, unique=True, verbose_name=_('dean'))
   office = models.IntegerField(verbose_name=_("office number"))
   time = models.DateTimeField(auto_now_add=True)
@@ -497,7 +500,8 @@ class Course(models.Model):
   
   
   def __str__(self):
-    return self.name
+    text = "%s(%s)" % (self.name, self.code)
+    return text
   
   class Meta:
     verbose_name=_('Course')

@@ -1,5 +1,5 @@
 User and their password for this database application
-admin: che153980
+admin: chemat3980
 First name= Ahmad
 Last name= Gbolahan
 Email = ahmadgbolly97@gmail.com

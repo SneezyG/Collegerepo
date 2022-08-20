@@ -1,3 +1,9 @@
+
+"""
+All form class are only for admin form custom validation, nothing more, nothing less
+"""
+
+
 from django import forms
 from django.core.exceptions import ValidationError
 from datetime import date
@@ -12,11 +18,10 @@ quater = {
   "4": [10, 11, 12]
 }
 
-"""
-All form class are only for admin form custom validation, nothing more, nothing less
-"""
+
 
 class LecturerAdminForm(forms.ModelForm):
+  
     """
     ensure that only person object with lecturer category are added to the lecturer table.
     """
@@ -31,6 +36,7 @@ class LecturerAdminForm(forms.ModelForm):
 
 
 class StudentAdminForm(forms.ModelForm):
+  
     """
     ensure that only person object with student or graduate category can be added to the student table.
     
@@ -72,6 +78,7 @@ class StudentAdminForm(forms.ModelForm):
 
 
 class Grad_StudentAdminForm(forms.ModelForm):
+  
   """
   ensure that only graduate student are added to this table.
   """
@@ -86,6 +93,7 @@ class Grad_StudentAdminForm(forms.ModelForm):
     
     
 class DegreeAdminForm(forms.ModelForm):
+  
   """
   ensure that the year field is between 1900 to the previous year.
   """
@@ -102,6 +110,7 @@ class DegreeAdminForm(forms.ModelForm):
 
 
 class ResearcherAdminForm(forms.ModelForm):
+  
   """
   ensure the person field actually contain a valid graduate or lecturer object.
   """
@@ -117,6 +126,7 @@ class ResearcherAdminForm(forms.ModelForm):
       
 
 class SessionAdminForm(forms.ModelForm):
+  
   """
   ensure that the year field is between 1900 to the current year.
   """
@@ -132,6 +142,7 @@ class SessionAdminForm(forms.ModelForm):
       
 
 class CurrentSessionAdminForm(forms.ModelForm):
+  
   """
   ensure that only session with current year and current quater can be added to this table.
   """
@@ -150,6 +161,7 @@ class CurrentSessionAdminForm(forms.ModelForm):
     
 
 class OldSessionAdminForm(forms.ModelForm):
+  
   """
   ensure that the session is not current.
   """
