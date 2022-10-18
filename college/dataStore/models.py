@@ -191,6 +191,10 @@ class Grad_Student(Student):
   def __str__(self):
       fullname = '%s(%s)' % (self.fullName(), self.get_degree_display())
       return fullname.title()
+      
+  def Degree(self):
+    text = '%s in %s(year: %s)' % (self.get_degree_display(), self.get_college_display(), self.year)
+    return text
     
       
   class Meta:

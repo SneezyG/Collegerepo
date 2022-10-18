@@ -216,7 +216,7 @@ class Grad_StudentAdmin(admin.ModelAdmin):
   
   filter_vertical = ('committee',)
   
-  list_display = ('ssn', 'fullName', 'college', 'degree', 'year', 'advisor')
+  list_display = ('ssn', 'fullName', 'Degree', 'advisor')
   
   list_filter = ('sex', 'degree', 'college')
   
