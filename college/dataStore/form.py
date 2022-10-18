@@ -1,10 +1,11 @@
 
 """
-All form class are only for admin form custom validation, nothing more, nothing less
+All form class are only for admin custom validation, nothing more, nothing less.
 """
 
 
 from django import forms
+from .models import Faculty, Grad_Student
 from django.core.exceptions import ValidationError
 from datetime import date
 from django.utils.translation import gettext_lazy as _
@@ -20,112 +21,82 @@ quater = {
 
 
 
-class LecturerAdminForm(forms.ModelForm):
-  
-    """
-    ensure that only person object with lecturer category are added to the lecturer table.
-    """
-    
-    def clean_person(self):
-      data = self.cleaned_data["person"]
-      if data.category != "Lect":
-        text= _("only lecturer can be added to this table")
-        raise ValidationError(text)
-  
-      return data
-
-
 class StudentAdminForm(forms.ModelForm):
   
     """
-    ensure that only person object with student or graduate category can be added to the student table.
-    
-    ensure the level of person object with graduate category is 5.
-    
-    ensure the level of person object with student category is not 5.
-    
-    ensure minor and major field don't contain the same department.
+    Ensure minor and major field don't contain the same department.
     """
       
     def clean(self):
       cleaned_data = super().clean()
-      person = cleaned_data.get('person')
       minor = cleaned_data.get('minor')
       major = cleaned_data.get('major')
-      level = cleaned_data.get('level')
-      try:
-         catg = person.category
-      except:
-         return cleaned_data
-      if catg == "Std" or catg == "Grad":
-        if catg == "Grad" and level != "Cls 5":
-          text = _('graduate must belong to level 5')
-          raise ValidationError(text)
-        elif catg == "Std" and level == "Cls 5":
-           text = _("student cannot belong to level 5")
-           raise ValidationError(text)
-        elif not minor or not major:
-          return cleaned_data
-        elif minor == major:
-          text = _("a student can't have same department as minor and major")
-          raise ValidationError(text)
-        else:
-           return cleaned_data
-      else:
-        text = _("only students and graduates can be added to this table")
+      
+      if not minor or not major:
+        return cleaned_data
+      elif minor == major:
+        text = _("A student can't have same department as minor and major")
         raise ValidationError(text)
+      else:
+         return cleaned_data
+      
 
 
 
-class Grad_StudentAdminForm(forms.ModelForm):
-  
-  """
-  ensure that only graduate student are added to this table.
-  """
-  
-  def clean_student(self):
-    data = self.cleaned_data["student"]
-    if data.level != "Cls 5":
-      text = _("only graduate student can be added to this table")
-      raise ValidationError(text)
+
     
-    return data
-    
-    
-class DegreeAdminForm(forms.ModelForm):
+class GradAdminForm(forms.ModelForm):
   
   """
-  ensure that the year field is between 1900 to the previous year.
+  Ensure that the year field is between 1900 to the previous year.
+  Ensure the level field is always Graduate.
+  
   """
   
+  def clean_level(self):
+    data = self.cleaned_data['level']
+    if data == 'Cls 5':
+      return data
+    text = _('Field value can only be Graduate')
+    raise ValidationError(text)
+    
   def clean_year(self):
     data = self.cleaned_data["year"]
     if data <= currentYear-1 and data >= 1900:
       return data
     else:
-      text = _("year can only be between 1900 to")
+      text = _("Year can only be between 1900 to")
       warn = "%s %s" % (text, currentYear-1)
       raise ValidationError(warn)
+      
       
 
 
 class ResearcherAdminForm(forms.ModelForm):
   
   """
-  ensure the person field actually contain a valid graduate or lecturer object.
+  ensure that a researcher is a valid faculty member or graduate student.
   """
   
-  def clean_person(self):
-    data = self.cleaned_data["person"]
-    if data.category == "Grad" or data.category == "Lect":
-        return data
-    text = _("invalid person, person not a lecturer or graduate")
-    raise ValidationError(text)
+  def clean(self):
+    cleaned_data = super().clean()
+    ssn = cleaned_data.get('ssn')
     
-
+    member = Faculty.objects.get(ssn=ssn)
+    if member:
+      return cleaned_data
+    
+    graduate = Grad_Student.objects.get(ssn=ssn)
+    if graduate:
+      return cleaned_data
+      
+    text = _("A researcher must be a faculty member or a graduate")
+    raise ValidationError(text)
+  
+  
       
 
-class SessionAdminForm(forms.ModelForm):
+class SectionAdminForm(forms.ModelForm):
   
   """
   ensure that the year field is between 1900 to the current year.
@@ -140,38 +111,34 @@ class SessionAdminForm(forms.ModelForm):
       warn = "%s %s" % (text, currentYear)
       raise ValidationError(warn)
       
+  def clean_grade(self):
+    data = self.cleaned_data["grade"]
+    if data:
+      return data
+    else: 
+      raise ValidationError("This field is required")
+      
 
-class CurrentSessionAdminForm(forms.ModelForm):
+
+
+class CurrentSectionAdminForm(forms.ModelForm):
   
   """
-  ensure that only session with current year and current quater can be added to this table.
+  ensure that only section with current year and current quater can be added to this table.
   """
   
-  def clean(self):
-    cleaned_data = super().clean()
-    try:
-      year = cleaned_data.get('session').year
-      qtr = cleaned_data.get('session').qtr
-    except:
-      return cleaned_data
-    if year == currentYear and currentMonth in quater[qtr]:
-         return cleaned_data
-    text = _("cannot add session because it is not current")
+  def clean_year(self):
+    data = self.cleaned_data['year']
+    if data == currentYear:
+       return data
+    text = _("Year can only be current year")
+    raise ValidationError(text)
+  
+  def clean_qtr(self):
+    data = self.cleaned_data['qtr']
+    if currentMonth in quater[data]:
+       return data
+    text = _("Quarter can only be current quater")
     raise ValidationError(text)
     
-
-class OldSessionAdminForm(forms.ModelForm):
-  
-  """
-  ensure that the session is not current.
-  """
-  
-  def clean_session(self):
-    data = self.cleaned_data['session']
-    year = data.year
-    if year <= currentYear-1 and year >= 1900:
-       return data
-    else:
-      text = _("only old session can be added")
-      raise ValidationError(text)
 

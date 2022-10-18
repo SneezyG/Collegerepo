@@ -1,11 +1,8 @@
 
 from django.contrib import admin
-from django.contrib.admin.models import LogEntry,DELETION
-from .models import Person, Lecturer, Student, Grad_Student, Degree, Researcher, Grant, Support, Department, College, Course, Session, CurrentSession, OldSession
-from django.utils.html import escape
-from django.urls import reverse
-from django.utils.safestring import mark_safe
-from .form import LecturerAdminForm, StudentAdminForm, DegreeAdminForm, SessionAdminForm, ResearcherAdminForm, CurrentSessionAdminForm, OldSessionAdminForm, Grad_StudentAdminForm
+from django.contrib.admin.models import LogEntry
+from .models import Person, Faculty, Student, Grad_Student, Degree, Researcher, Grant, Support, Department, College, Course, Section, CurrentSection
+from .form import StudentAdminForm, GradAdminForm, SectionAdminForm, CurrentSectionAdminForm, ResearcherAdminForm
 from django.utils.translation import gettext_lazy as _
 
 
@@ -56,7 +53,7 @@ class LogEntryAdmin(admin.ModelAdmin):
         return False
 
     def has_delete_permission(self, request, obj=None):
-        return request.user.is_superuser
+        return False
 
     def has_view_permission(self, request, obj=None):
         return request.user.is_superuser
@@ -75,45 +72,67 @@ class PersonAdmin(admin.ModelAdmin):
     
   fieldsets = (
     (None, {
-      'classes': ('extrapretty'),
-      'fields': ('ssn', ('firstName', 'middleName', 'lastName'), 'birthday', 'category', 'sex')
+      'classes': ('extrapretty',),
+      'fields': ('ssn', ('firstName', 'middleName', 'lastName'), 'birthday', 'sex')
     }),
     
     ('Address', {
-      'classes': ('extrapretty'),
+      'classes': ('extrapretty',),
       'fields': (('aptNo', 'laneNo'), 'street', ('city', 'state'), 'zipcode')
     }),
     )
     
   date_hierarchy = 'time'
+
+  ordering = ['fullName']
     
-  list_display = ('fullName', 'category', 'address')
+  list_display = ('ssn', 'fullName', 'sex', 'address')
   
-  list_filter = ('category', 'sex')
+  list_filter = ('sex',)
   
   preserve_filters = False
 
-  search_fields = ['firstName', 'middleName', 'lastName']
+  search_fields = ['ssn', 'firstName', 'middleName', 'lastName']
 
 
 
 
-@admin.register(Lecturer)
-class LecturerAdmin(admin.ModelAdmin):
+@admin.register(Faculty)
+class FacultyAdmin(admin.ModelAdmin):
   
   """
-    Register the lecturer model into the admin.
+    Register the Faculty model into the admin.
     Add some customization.
   """
-  
-  form = LecturerAdminForm
 
+  fieldsets = (
+    ('Personal Info'', {
+      'classes': ('extrapretty',),
+      'fields': ('ssn', ('firstName', 'middleName', 'lastName'), 'birthday', 'sex')
+    }),
+    
+    (None, {
+      'classes': ('extrapretty',),
+      'fields': ('rank', 'salary', 'officePhone', 'officeAddress')
+    }),
+    
+    ('Residential Address', {
+      'classes': ('extrapretty',),
+      'fields': (('aptNo', 'laneNo'), 'street', ('city', 'state'), 'zipcode')
+    }),
+    )
+    
   date_hierarchy = 'time'
-  list_display = ('fullName', 'rank', 'officeAddress')
-  list_filter = ('rank', 'salary')
+
+  ordering = ['fullName',]
+  
+  list_display = ('ssn', 'fullName', 'rank', 'officeAddress')
+  
+  list_filter = ('sex', 'rank', 'salary')
+  
   preserve_filters = False
-  search_fields = ['person__firstName', 'person__middleName', 'person__lastName']
-  autocomplete_fields = ['person']
+
+  search_fields = ['ssn', 'firstName', 'middleName', 'lastName']
   
 
 
@@ -127,16 +146,40 @@ class StudentAdmin(admin.ModelAdmin):
     Add some customization.
   """
   
+  fieldsets = (
+    ('Personal Info'', {
+      'classes': ('extrapretty',),
+      'fields': ('ssn', ('firstName', 'middleName', 'lastName'), 'birthday', 'sex')
+    }),
+    
+    (None, {
+      'classes': ('extrapretty',),
+      'fields':('level', ('minor', 'major'), ('Reg', 'trspt'))
+    }),
+    
+    ('Residential Address', {
+      'classes': ('extrapretty',),
+      'fields': (('aptNo', 'laneNo'), 'street', ('city', 'state'), 'zipcode')
+    }),
+    )
+  
   form = StudentAdminForm
 
   date_hierarchy = 'time'
-  fields = ('person', 'level', ('minor', 'major'), ('Reg', 'trspt'))
+
+  ordering = ['fullName',]
+  
   filter_vertical = ('Reg', 'trspt')
-  list_display = ('fullName', 'level', 'minor','major')
-  list_filter = ('level',)
+  
+  list_display = ('ssn', 'fullName', 'level', 'minor', 'major')
+  
+  list_filter = ('sex', 'level',)
+  
   preserve_filters = False
-  search_fields = ['person__firstName', 'person__middleName', 'person__lastName']
-  autocomplete_fields = ['person', 'minor', 'major', 'Reg', 'trspt']
+
+  search_fields = ['ssn', 'firstName', 'middleName', 'lastName']
+  
+  autocomplete_fields = ['minor', 'major', 'Reg', 'trspt']
   
 
 
@@ -148,31 +191,44 @@ class Grad_StudentAdmin(admin.ModelAdmin):
     Add some customization.
   """
   
-  form = Grad_StudentAdminForm
-  
-  date_hierarchy = 'time'
-  list_display = ('fullName', 'advisor')
-  list_filter = ('degrees__degree',)
-  preserve_filters = False
-  search_fields = ['student__person__firstName', 'student__person__middleName', 'student__person__lastName']
-  autocomplete_fields = ['student', 'advisor', 'committee']
-
-
-
-@admin.register(Degree)
-class DegreeAdmin(admin.ModelAdmin):
-  
-  """
-    Register the degree model into the admin.
-    Add some customization.
-  """
-  
-  form = DegreeAdminForm
+  fieldsets = (
+    ('Personal Info'', {
+      'classes': ('extrapretty',),
+      'fields': ('ssn', ('firstName', 'middleName', 'lastName'), 'birthday', 'sex')
+    }),
+    
+    (None, {
+      'classes': ('extrapretty',),
+      'fields':('level', 'college', 'degree', 'year', 'advisor', 'committee')
+    }),
+    
+    ('Residential Address', {
+      'classes': ('extrapretty',),
+      'fields': (('aptNo', 'laneNo'), 'street', ('city', 'state'), 'zipcode')
+    }),
+    )
+   
+  form = GradAdminForm
 
   date_hierarchy = 'time'
-  list_display = ('degree', 'college', 'year')
-  list_filter = ('college', 'degree')
+
+  ordering = ['fullName',]
+  
+  filter_vertical = ('committee',)
+  
+  list_display = ('ssn', 'fullName', 'college', 'degree', 'year', 'advisor')
+  
+  list_filter = ('sex', 'degree', 'college')
+  
   preserve_filters = False
+
+  search_fields = ['ssn', 'firstName', 'middleName', 'lastName']
+  
+  autocomplete_fields = ['advisor', 'committee']
+
+
+
+
 
 
 
@@ -185,13 +241,21 @@ class ResearcherAdmin(admin.ModelAdmin):
   """
   
   form = ResearcherAdminForm
-
-  date_hierarchy = 'time'
-  filter_vertical = ('support',)
-  list_display = ('fullName',)
-  search_fields = ['person__firstName', 'person__middleName', 'person__lastName']
-  autocomplete_fields = ['person', 'support']
   
+  date_hierarchy = 'time'
+
+  ordering = ['fullName',]
+
+  filter_vertical = ('support',)
+  
+  list_display = ('ssn', 'fullName')
+  
+  search_fields = ['ssn', 'firstName', 'middleName', 'lastName']
+  
+  autocomplete_fields = ['support',]
+  
+
+
 
 
 @admin.register(Grant)
@@ -203,26 +267,18 @@ class GrantAdmin(admin.ModelAdmin):
   """
   
   date_hierarchy = 'time'
-  list_display = ('title', 'agency', 'investigator')
+
+  ordering = ['title',]
+
+  list_display = ('title', 'agency', 'investigator', 'start', 'end', 'spend')
+  
+  list_filter = ('start', 'end')
+  
   search_fields = ['title', 'agency']
+  
   autocomplete_fields = ['investigator']
 
 
-
-@admin.register(Support)
-class SupportAdmin(admin.ModelAdmin):
-  
-  """
-    Register the support model into the admin.
-    Add some customization.
-  """
-  
-  date_hierarchy = 'time'
-  list_display = ('agency', 'start', 'end', 'spend')
-  list_filter = ('start', 'end')
-  preserve_filters = False
-  search_fields = ['grant__agency',]
-  autocomplete_fields = ['grant']
 
 
 
@@ -235,12 +291,20 @@ class DepartmentAdmin(admin.ModelAdmin):
   """
   
   date_hierarchy = 'time'
-  filter_vertical = ('lecturers',)
-  list_display = ('Name', 'HOD', 'college')
+
+  ordering = ['name',]
+
+  filter_vertical = ('belongs',)
+  
+  list_display = ('name', 'HOD', 'college')
+  
   list_filter = ('college__name',)
+  
   preserve_filters = False
-  search_fields = ['Name',]
-  autocomplete_fields = ('HOD', 'lecturers')
+
+  search_fields = ['name',]
+  
+  autocomplete_fields = ('HOD', 'belongs', 'college')
 
 
 
@@ -253,9 +317,12 @@ class CollegeAdmin(admin.ModelAdmin):
   """
   
   date_hierarchy = 'time'
+
+  ordering = ['name',]
+  
   list_display = ('name', 'dean', 'office')
-  list_filter = ('name',)
-  preserve_filters = False
+  
+  search_fields = ['name',]
 
 
 
@@ -268,61 +335,60 @@ class CourseAdmin(admin.ModelAdmin):
   """
   
   date_hierarchy = 'time'
-  list_display = ('name', 'code', 'Dept', 'des')
+
+  ordering = ['code',]
+
+  list_display = ('name', 'code', 'dept', 'des')
+  
+  list_filter = ('dept__college__name',)
+  
+  preserve_filters = False
+  
   search_fields = ('name', 'code',)
-  autocomplete_fields = ['Dept']
+  
+  autocomplete_fields = ['dept']
 
 
 
-@admin.register(Session)
-class SessionAdmin(admin.ModelAdmin):
+@admin.register(Section)
+class SectionAdmin(admin.ModelAdmin):
   
   """
     Register the session model into the admin.
     Add some customization.
   """
   
-  form = SessionAdminForm
-  fields = (('year', 'qtr'), ('course', 'teacher'))
-  
-  list_display  = ('name', 'year', 'qtr', 'teacher')
+  form = SectionAdminForm
+
+  ordering = ['year',]
+
+  fields = (('course', 'grade', 'teacher'), ('year', 'qtr'),)
   
   date_hierarchy = 'time'
-  list_filter = ('qtr',)
-  preserve_filters = False
-  search_fields = ['course__name']
+  
+  list_display  = ('name', 'grade', 'year', 'qtr', 'teacher')
+  
   autocomplete_fields = ['course', 'teacher']
   
 
 
-@admin.register(CurrentSession)
-class CurrentSessionAdmin(admin.ModelAdmin):
+@admin.register(CurrentSection)
+class CurrentSectionAdmin(admin.ModelAdmin):
   
   """
     Register the currentSession model into the admin.
     Add some customization.
   """
   
-  form = CurrentSessionAdminForm
+  form = CurrentSectionAdminForm
+  
+  ordering = ['year',]
 
+  fields = (('course', 'teacher'), ('year', 'qtr'),)
+  
   date_hierarchy = 'time'
-  list_display = ('course', 'teacher')
-  search_fields = ['session__course__name']
-  autocomplete_fields = ['session']
   
-
-
-@admin.register(OldSession)
-class OldSessionAdmin(admin.ModelAdmin):
+  list_display  = ('name', 'year', 'qtr', 'teacher')
   
-  """
-    Register the oldSession model into the admin.
-    Add some customization.
-  """
+  autocomplete_fields = ['course', 'teacher']
   
-  form = OldSessionAdminForm
-
-  date_hierarchy = 'time'
-  list_display = ('course', 'teacher', 'year', 'quarter', 'grade')
-  search_fields = ['session__course__name']
-  autocomplete_fields = ['session']
