@@ -10,6 +10,7 @@ from django.core.exceptions import ValidationError
 from datetime import date
 from django.utils.translation import gettext_lazy as _
 
+
 currentYear = date.today().year
 currentMonth = date.today().month
 quater = {
@@ -50,7 +51,6 @@ class GradAdminForm(forms.ModelForm):
   """
   Ensure that the year field is between 1900 to the previous year.
   Ensure the level field is always Graduate.
-  
   """
   
   def clean_level(self):
@@ -75,7 +75,7 @@ class GradAdminForm(forms.ModelForm):
 class ResearcherAdminForm(forms.ModelForm):
   
   """
-  ensure that a researcher is a valid faculty member or graduate student.
+  Ensure that a researcher is a valid faculty member or graduate student.
   """
   
   def clean(self):
@@ -99,7 +99,8 @@ class ResearcherAdminForm(forms.ModelForm):
 class SectionAdminForm(forms.ModelForm):
   
   """
-  ensure that the year field is between 1900 to the current year.
+  Ensure that the year field is between 1900 to the current year.
+  Ensure that the grade field is always provided even though it has a blank value of true.
   """
   
   def clean_year(self):
@@ -124,7 +125,7 @@ class SectionAdminForm(forms.ModelForm):
 class CurrentSectionAdminForm(forms.ModelForm):
   
   """
-  ensure that only section with current year and current quater can be added to this table.
+  Ensure that only section with current year and current quater can be added to CurrentSection table.
   """
   
   def clean_year(self):

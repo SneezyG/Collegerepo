@@ -6,7 +6,7 @@ For this database application, consider a UNIVERSITY database that keeps track o
 The schema used as a blueprint for the development of this application uses an EER model for the representation of major entities present in typical university environment and the corresponding relationship between these entities. This schema can be found in the project root directory with the name "schema.png".
 
 
-Shipped with the database application are core functionalities like:
+Shipped with this database application are these core functionalities:
 User-Authentication-System, User-Permissions-Management, 
 Activities Logging, 
 Internationalisation.
@@ -14,9 +14,12 @@ Interface customization.
 
 
 There are three group of user for this application, each group with it designated list of permission:
-Admin -> the superuser
-Editor
-Attendant
+
+Admin(the superuser) -> have all permission, can add change, view and delete data in any table except for logging, where superuser only have view permission.
+
+Editor -> have add, change, view and delete permission on selected tables.
+
+Attendant -> only have view permission on selected tables.
 
 
 
