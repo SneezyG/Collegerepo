@@ -82,11 +82,11 @@ class ResearcherAdminForm(forms.ModelForm):
     cleaned_data = super().clean()
     ssn = cleaned_data.get('ssn')
     
-    member = Faculty.objects.get(ssn=ssn)
+    member = Faculty.objects.filter(ssn=ssn) 
     if member:
       return cleaned_data
     
-    graduate = Grad_Student.objects.get(ssn=ssn)
+    graduate = Grad_Student.objects.filter(ssn=ssn)
     if graduate:
       return cleaned_data
       
@@ -100,7 +100,7 @@ class SectionAdminForm(forms.ModelForm):
   
   """
   Ensure that the year field is between 1900 to the current year.
-  Ensure that the grade field is always provided even though it has a blank value of true.
+  Ensure that the grade field is always provided even though it has a blank and null attributes set to True.
   """
   
   def clean_year(self):
@@ -108,7 +108,7 @@ class SectionAdminForm(forms.ModelForm):
     if data <= currentYear and data >= 1900:
       return data
     else:
-      text = _("year can only be between 1900 to")
+      text = _("Year can only be between 1900 to")
       warn = "%s %s" % (text, currentYear)
       raise ValidationError(warn)
       

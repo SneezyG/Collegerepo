@@ -139,7 +139,7 @@ class Student(Person):
        choices=clsType, verbose_name=_('Class'))
    minor = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, blank=True, related_name="minor_students", verbose_name=_('minor'))
    major = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, blank=True, related_name="major_students", verbose_name=_('major'))
-   Reg = models.ManyToManyField("CurrentSection", related_name="students", verbose_name=_('Registered_courses'))
+   Reg = models.ManyToManyField("CurrentSection", related_name="registered_students", verbose_name=_('Registered_courses'))
    trspt = models.ManyToManyField("Section", related_name="students", verbose_name=_('transcript'))
    
    
@@ -249,7 +249,6 @@ class Grant(models.Model):
   This store a single grant data. 
   
   It is related to :model:`dataStore.Faculty` through investigator relationship(many to one).
-  
   """
   
   title = models.CharField(max_length=30, verbose_name=_('title'))
@@ -308,7 +307,6 @@ class College(models.Model):
   Store a single college data.
   
   It have a unique field "dean of the college".
-  
   """
   
   clgType = (
@@ -395,13 +393,13 @@ class Section(models.Model):
   year = models.IntegerField(verbose_name=_('year'))
   qtr = models.CharField(max_length=1, choices=qtrType, verbose_name=_('quarter'))
   grade = models.CharField(max_length=1, choices=gradeType, null=True, blank=True, verbose_name=_('grade'))
-  course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('course'))
+  course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name=_('course'))
   teacher = models.ForeignKey(Researcher, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('teacher'))
   time = models.DateTimeField(auto_now_add=True)
   
   
   def __str__(self):
-    sect = '%s (%s, %s)' % (self.course.name, self.get_qtr_display(), self.year)
+    sect = '%s (%s | grade: %s)' % (self.course.name, self.year, self.get_grade_display())
     return sect
 
   def name(self):
@@ -432,6 +430,9 @@ class CurrentSection(Section):
    
    """
    
+   def __str__(self):
+     sect = '%s(%s)' % (self.course.name, self.course.code)
+     return sect
   
    class Meta:
      verbose_name=_('Current Section')

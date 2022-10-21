@@ -19,12 +19,12 @@ msgstr ""
 
 #: college/settings.py:146
 msgid "English"
-msgstr ""
+msgstr "英语"
 
 #: college/settings.py:147
 msgid "Chinese"
-msgstr ""
+msgstr "中国人"
 
 #: college/settings.py:148
 msgid "French"
-msgstr ""
+msgstr "法语"

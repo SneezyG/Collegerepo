@@ -1,7 +1,7 @@
 User and their password for this database application
-admin: chemat3980
-First name= Ahmad
-Last name= Gbolahan
+
+admin: gsuwjsbbd7272
+This user is a superuser 
 Email = ahmadgbolly97@gmail.com
 
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-20 08:26+0100\n"
+"POT-Creation-Date: 2022-10-20 22:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: datastore/admin.py:14
+#: datastore/admin.py:11
 msgid "(None)"
 msgstr "(没有任何)"
 
-#: datastore/admin.py:16
+#: datastore/admin.py:13
 msgid "College Data Store"
 msgstr "大学数据存储"
 
-#: datastore/admin.py:17
+#: datastore/admin.py:14
 msgid "Data Store Management"
 msgstr "数据存储管理"
 
-#: datastore/admin.py:18
+#: datastore/admin.py:15
 msgid "Data Admin"
 msgstr "数据管理员"
 
@@ -37,492 +37,425 @@ msgstr "数据管理员"
 msgid "data store"
 msgstr "数据存储"
 
-#: datastore/form.py:32
-msgid "only lecturer can be added to this table"
-msgstr "只有讲师可以添加到此表中"
-
-#: datastore/form.py:62
-msgid "graduate must belong to level 5"
-msgstr "毕业生必须属于5级"
-
-#: datastore/form.py:65
-msgid "student cannot belong to level 5"
-msgstr "学生不能属于 5 级"
-
-#: datastore/form.py:70
-msgid "a student can't have same department as minor and major"
+#: datastore/form.py:39
+msgid "A student can't have same department as minor and major"
 msgstr "学生不能拥有与辅修和主修相同的系"
 
-#: datastore/form.py:75
-msgid "only students and graduates can be added to this table"
-msgstr "只有学生和毕业生可以添加到此表中"
+#: datastore/form.py:60
+msgid "Field value can only be Graduate"
+msgstr "字段值只能是研究生"
 
-#: datastore/form.py:89
-msgid "only graduate student can be added to this table"
-msgstr "只有研究生可以添加到此表中"
-
-#: datastore/form.py:106 datastore/form.py:139
-msgid "year can only be between 1900 to"
+#: datastore/form.py:68 datastore/form.py:111
+msgid "Year can only be between 1900 to"
 msgstr "年份只能在 1900 到"
 
-#: datastore/form.py:122
-#, fuzzy
-#| msgid "this person is not a valid graduate"
-msgid "invalid person, person not a lecturer or graduate"
-msgstr "此人不是有效的毕业生"
+#: datastore/form.py:93
+msgid "A researcher must be a faculty member or a graduate"
+msgstr "研究人员必须是教职员工或毕业生"
 
-#: datastore/form.py:159
-msgid "cannot add session because it is not current"
-msgstr "无法添加会话，因为它不是当前的"
+#: datastore/form.py:135
+msgid "Year can only be current year"
+msgstr "年份只能在 1900 到"
 
-#: datastore/form.py:175
-msgid "only old session can be added"
-msgstr "只能添加旧会话"
+#: datastore/form.py:142
+msgid "Quarter can only be current quater"
+msgstr "季度只能是当前季度"
 
-#: datastore/models.py:28
+#: datastore/models.py:25
 msgid "male"
 msgstr "男性"
 
-#: datastore/models.py:29
+#: datastore/models.py:26
 msgid "female"
 msgstr "女性"
 
-#: datastore/models.py:30
+#: datastore/models.py:27
 msgid "private"
 msgstr "私人的"
 
-#: datastore/models.py:33 datastore/models.py:140
-msgid "Lecturer"
-msgstr "讲师"
-
-#: datastore/models.py:34 datastore/models.py:213 datastore/models.py:234
-msgid "Student"
-msgstr "学生"
-
-#: datastore/models.py:35 datastore/models.py:169 datastore/models.py:264
-msgid "Graduate"
-msgstr "毕业"
-
-#: datastore/models.py:39
+#: datastore/models.py:30 datastore/models.py:219
 msgid "social security number"
 msgstr "社会安全号码"
 
-#: datastore/models.py:40
+#: datastore/models.py:31 datastore/models.py:220
 msgid "first name"
 msgstr "名"
 
-#: datastore/models.py:42
+#: datastore/models.py:33 datastore/models.py:222
 msgid "middle name"
 msgstr "中间名字"
 
-#: datastore/models.py:43
+#: datastore/models.py:34 datastore/models.py:223
 msgid "last name"
 msgstr "姓"
 
-#: datastore/models.py:44
+#: datastore/models.py:35
 msgid "birthday"
 msgstr "生日"
 
-#: datastore/models.py:46
-msgid "category"
-msgstr "类别"
-
-#: datastore/models.py:47
+#: datastore/models.py:36
 msgid "sex"
 msgstr "性别"
 
-#: datastore/models.py:48
+#: datastore/models.py:37
 msgid "apartment number"
 msgstr "公寓号码"
 
-#: datastore/models.py:49
+#: datastore/models.py:38
 msgid "lane number"
 msgstr "车道号"
 
-#: datastore/models.py:50
+#: datastore/models.py:39
 msgid "street"
 msgstr "街道"
 
-#: datastore/models.py:51
+#: datastore/models.py:40
 msgid "city"
 msgstr "城市"
 
-#: datastore/models.py:52
+#: datastore/models.py:41
 msgid "state"
 msgstr "状态"
 
-#: datastore/models.py:53
+#: datastore/models.py:42
 msgid "zipcode"
 msgstr "邮政编码"
 
-#: datastore/models.py:59 datastore/models.py:119 datastore/models.py:185
-#: datastore/models.py:250 datastore/models.py:348
+#: datastore/models.py:48 datastore/models.py:230
 msgid "full name"
 msgstr "全名"
 
-#: datastore/models.py:72
+#: datastore/models.py:60
 msgid "address"
 msgstr "地址"
 
-#: datastore/models.py:77
+#: datastore/models.py:65
 msgid "Person"
 msgstr "人"
 
-#: datastore/models.py:93
+#: datastore/models.py:80
 msgid "Assistance"
 msgstr "协助"
 
-#: datastore/models.py:94
+#: datastore/models.py:81
 msgid "Associate"
 msgstr "联系"
 
-#: datastore/models.py:95
+#: datastore/models.py:82
 msgid "Adjunct"
 msgstr "附件"
 
-#: datastore/models.py:96
+#: datastore/models.py:83
 msgid "Research"
 msgstr "研究"
 
-#: datastore/models.py:97
+#: datastore/models.py:84
 msgid "Visiting"
 msgstr "参观"
 
-#: datastore/models.py:101
+#: datastore/models.py:88
 msgid "Below $30,000"
 msgstr "低于 30,000 美元"
 
-#: datastore/models.py:102
+#: datastore/models.py:89
 msgid "$30,000 - $60,000"
 msgstr ""
 
-#: datastore/models.py:103
+#: datastore/models.py:90
 msgid "$61,000 - $90,000"
 msgstr ""
 
-#: datastore/models.py:104
+#: datastore/models.py:91
 msgid "$90,000 - $120,000"
 msgstr ""
 
-#: datastore/models.py:105
+#: datastore/models.py:92
 msgid "Above $120,000"
 msgstr "120,000 美元以上"
 
-#: datastore/models.py:109 datastore/models.py:172 datastore/models.py:337
-msgid "person"
-msgstr "人"
-
-#: datastore/models.py:111
+#: datastore/models.py:97
 msgid "rank"
 msgstr "秩"
 
-#: datastore/models.py:112
+#: datastore/models.py:98
 msgid "salary"
 msgstr "薪水"
 
-#: datastore/models.py:113
+#: datastore/models.py:99
 msgid "office address"
 msgstr "办公地址"
 
-#: datastore/models.py:114
+#: datastore/models.py:100
 msgid "office phone"
 msgstr "办公室电话"
 
-#: datastore/models.py:165
+#: datastore/models.py:108
+msgid "Faculty"
+msgstr "学院"
+
+#: datastore/models.py:131
 msgid "Freshman"
 msgstr "大一新生"
 
-#: datastore/models.py:166
+#: datastore/models.py:132
 msgid "Sophomore"
 msgstr "二年级"
 
-#: datastore/models.py:167
+#: datastore/models.py:133
 msgid "Junior"
 msgstr "初级"
 
-#: datastore/models.py:168
+#: datastore/models.py:134
 msgid "Senior"
 msgstr "高级的"
 
-#: datastore/models.py:174
-msgid "level"
-msgstr "等级"
+#: datastore/models.py:135 datastore/models.py:201
+msgid "Graduate"
+msgstr "毕业"
 
-#: datastore/models.py:175
+#: datastore/models.py:139
+msgid "Class"
+msgstr "班级"
+
+#: datastore/models.py:140
 msgid "minor"
 msgstr "次要的"
 
-#: datastore/models.py:176
+#: datastore/models.py:141
 msgid "major"
 msgstr "重大的"
 
-#: datastore/models.py:177
+#: datastore/models.py:142
 msgid "Registered_courses"
 msgstr "注册课程"
 
-#: datastore/models.py:178
+#: datastore/models.py:143
 msgid "transcript"
 msgstr "成绩单"
 
-#: datastore/models.py:235
-#, fuzzy
-#| msgid "degree"
-msgid "degrees"
-msgstr "程度"
+#: datastore/models.py:152
+msgid "Student"
+msgstr "学生"
 
-#: datastore/models.py:236
-msgid "advisor"
-msgstr "顾问"
-
-#: datastore/models.py:237
-msgid "committee"
-msgstr "委员会"
-
-#: datastore/models.py:283
+#: datastore/models.py:168
 msgid "Associate degree"
 msgstr "副学士学位"
 
-#: datastore/models.py:284
+#: datastore/models.py:169
 msgid "Bachelor's degree"
 msgstr "学士学位"
 
-#: datastore/models.py:285
+#: datastore/models.py:170
 msgid "Master's degree"
 msgstr "硕士"
 
-#: datastore/models.py:286
+#: datastore/models.py:171
 msgid "Doctoral degree"
 msgstr "博士学位"
 
-#: datastore/models.py:290 datastore/models.py:462
+#: datastore/models.py:175 datastore/models.py:313
 msgid "Science"
 msgstr "科学"
 
-#: datastore/models.py:291 datastore/models.py:463
+#: datastore/models.py:176 datastore/models.py:314
 msgid "Engineering"
 msgstr "工程"
 
-#: datastore/models.py:292 datastore/models.py:464
+#: datastore/models.py:177 datastore/models.py:315
 msgid "Agriculture"
 msgstr "农业"
 
-#: datastore/models.py:293 datastore/models.py:465
+#: datastore/models.py:178 datastore/models.py:316
 msgid "Medicine"
 msgstr "药物"
 
-#: datastore/models.py:294 datastore/models.py:466
+#: datastore/models.py:179 datastore/models.py:317
 msgid "Economic"
 msgstr "经济的"
 
-#: datastore/models.py:295 datastore/models.py:467
+#: datastore/models.py:180 datastore/models.py:318
 msgid "General studies"
 msgstr "一般研究"
 
-#: datastore/models.py:298 datastore/models.py:439 datastore/models.py:470
+#: datastore/models.py:183 datastore/models.py:291 datastore/models.py:321
 msgid "college"
 msgstr "大学"
 
-#: datastore/models.py:300
+#: datastore/models.py:185
 msgid "degree"
 msgstr "程度"
 
-#: datastore/models.py:301 datastore/models.py:534 datastore/models.py:646
+#: datastore/models.py:186 datastore/models.py:393
 msgid "year"
 msgstr "年"
 
-#: datastore/models.py:317
-msgid "Degree"
-msgstr "程度"
+#: datastore/models.py:187
+msgid "advisor"
+msgstr "顾问"
 
-#: datastore/models.py:338
+#: datastore/models.py:188
+msgid "thesis committee"
+msgstr "论文委员会"
+
+#: datastore/models.py:224
 msgid "support"
 msgstr "支持"
 
-#: datastore/models.py:364
+#: datastore/models.py:240
 msgid "Researcher"
 msgstr "研究员"
 
-#: datastore/models.py:377
+#: datastore/models.py:254
 msgid "title"
 msgstr "标题"
 
-#: datastore/models.py:378 datastore/models.py:414
+#: datastore/models.py:255
 msgid "agency"
 msgstr "机构"
 
-#: datastore/models.py:380
+#: datastore/models.py:257
 msgid "investigator"
 msgstr "研究者"
 
-#: datastore/models.py:388
+#: datastore/models.py:258
+msgid "start date"
+msgstr "开始日期"
+
+#: datastore/models.py:259
+msgid "end date"
+msgstr "结束日期"
+
+#: datastore/models.py:260
+msgid "%time spend"
+msgstr "时间花费"
+
+#: datastore/models.py:268
 msgid "Grant"
 msgstr "授予"
 
-#: datastore/models.py:402
-msgid "grant"
-msgstr "授予"
-
-#: datastore/models.py:403
-msgid "start date"
-msgstr ""
-
-#: datastore/models.py:404
-#, fuzzy
-#| msgid "date"
-msgid "end date"
-msgstr "日期"
-
-#: datastore/models.py:405
-#, fuzzy
-#| msgid "time"
-msgid "%time spend"
-msgstr "时间"
-
-#: datastore/models.py:418
-msgid "Support"
-msgstr "支持"
-
-#: datastore/models.py:434 datastore/models.py:496 datastore/models.py:546
+#: datastore/models.py:286 datastore/models.py:348 datastore/models.py:406
 msgid "name"
 msgstr "姓名"
 
-#: datastore/models.py:435
+#: datastore/models.py:287
 msgid "phone"
 msgstr "电话"
 
-#: datastore/models.py:436 datastore/models.py:472
+#: datastore/models.py:288 datastore/models.py:323
 msgid "office number"
 msgstr "办公室号码"
 
-#: datastore/models.py:437
-msgid "lecturer"
-msgstr "讲师"
+#: datastore/models.py:289
+msgid "belongs"
+msgstr "属于"
 
-#: datastore/models.py:438
+#: datastore/models.py:290
 msgid "Head of department"
 msgstr "部门主管"
 
-#: datastore/models.py:447
+#: datastore/models.py:299
 msgid "Department"
 msgstr "部门"
 
-#: datastore/models.py:471
+#: datastore/models.py:322
 msgid "dean"
 msgstr "院长"
 
-#: datastore/models.py:480
+#: datastore/models.py:332
 msgid "College"
 msgstr "大学"
 
-#: datastore/models.py:495
-#, fuzzy
-#| msgid "course"
+#: datastore/models.py:347
 msgid "course code"
 msgstr "课程代码"
 
-#: datastore/models.py:497
+#: datastore/models.py:349
 msgid "department"
 msgstr "部"
 
-#: datastore/models.py:498
+#: datastore/models.py:350
 msgid "description"
 msgstr "描述"
 
-#: datastore/models.py:507
+#: datastore/models.py:359
 msgid "Course"
 msgstr "课程"
 
-#: datastore/models.py:528
+#: datastore/models.py:380
 msgid "First Quarter"
 msgstr "第一季度"
 
-#: datastore/models.py:529
+#: datastore/models.py:381
 msgid "Second Quarter"
 msgstr "第二季度"
 
-#: datastore/models.py:530
+#: datastore/models.py:382
 msgid "Third Quarter"
 msgstr "第三季度"
 
-#: datastore/models.py:531
+#: datastore/models.py:383
 msgid "Fourth Quarter"
 msgstr "第四季度"
 
-#: datastore/models.py:535 datastore/models.py:650
-msgid "quarter"
-msgstr "四分之一"
+#: datastore/models.py:387
+msgid "Excellent"
+msgstr "出色的"
 
-#: datastore/models.py:536 datastore/models.py:589 datastore/models.py:638
-msgid "course"
-msgstr "课程"
-
-#: datastore/models.py:537 datastore/models.py:593 datastore/models.py:642
-msgid "teacher"
-msgstr "老师"
-
-#: datastore/models.py:558
-msgid "Session"
-msgstr "会议"
-
-#: datastore/models.py:580 datastore/models.py:633
-msgid "session"
-msgstr "会议"
-
-#: datastore/models.py:606
-msgid "Current Session"
-msgstr "当前会话"
-
-#: datastore/models.py:626
-msgid "Distinction"
-msgstr "区别"
-
-#: datastore/models.py:627
-msgid "Very good"
-msgstr "很好"
-
-#: datastore/models.py:628
+#: datastore/models.py:388
 msgid "Good"
 msgstr "好的"
 
-#: datastore/models.py:629
-msgid "Poor"
-msgstr "较差的"
-
-#: datastore/models.py:630
+#: datastore/models.py:389
 msgid "Pass"
 msgstr "经过"
 
-#: datastore/models.py:631
+#: datastore/models.py:390
 msgid "Fail"
 msgstr "失败"
 
-#: datastore/models.py:634
+#: datastore/models.py:394
+msgid "quarter"
+msgstr "四分之一"
+
+#: datastore/models.py:395
 msgid "grade"
 msgstr "年级"
 
-#: datastore/models.py:666
-msgid "Old Session"
-msgstr "旧会话"
+#: datastore/models.py:396
+msgid "course"
+msgstr "课程"
+
+#: datastore/models.py:397
+msgid "teacher"
+msgstr "老师"
+
+#: datastore/models.py:411
+msgid "Section"
+msgstr "部分"
+
+#: datastore/models.py:438
+msgid "Current Section"
+msgstr "当前部分"
 
 #: datastore/templates/admin/base.html:42
 msgid "Welcome,"
-msgstr ""
+msgstr "欢迎"
 
 #: datastore/templates/admin/base.html:49
 msgid "Documentation"
-msgstr ""
+msgstr "文档"
 
 #: datastore/templates/admin/base.html:53
 msgid "Change password"
-msgstr ""
+msgstr "更改密码"
 
 #: datastore/templates/admin/base.html:57
 msgid "Log out"
-msgstr ""
+msgstr "登出"
 
 #: datastore/templates/admin/base.html:69
 msgid "Home"
-msgstr ""
+msgstr "家"
 
 #: datastore/templates/index.html:57
 msgid "DATASTORE"
@@ -532,21 +465,92 @@ msgstr "数据存储"
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at COLLEGE DATA STORE."
-msgstr ""
-"您收到这封电子邮件是因为您请求为您的"
-"COLLEGE DATA STORE 的用户帐户。"
+msgstr "您收到这封电子邮件是因为您请求为您的COLLEGE DATA STORE 的用户帐户。"
 
 #: datastore/templates/registration/password_reset_email.html:4
 msgid "Please go to the following page and choose a new password:"
-msgstr ""
+msgstr "请转到以下页面并选择一个新密码"
 
 #: datastore/templates/registration/password_reset_email.html:8
 msgid "Your username, in case you’ve forgotten:"
-msgstr ""
+msgstr "您的用户名，以防您忘记了：” 消息字符串"
 
 #: datastore/templates/registration/password_reset_email.html:10
 msgid "The COLLEGE DATA STORE team"
 msgstr "大学数据存储团队"
+
+#~ msgid "only lecturer can be added to this table"
+#~ msgstr "只有讲师可以添加到此表中"
+
+#~ msgid "graduate must belong to level 5"
+#~ msgstr "毕业生必须属于5级"
+
+#~ msgid "student cannot belong to level 5"
+#~ msgstr "学生不能属于 5 级"
+
+#~ msgid "only students and graduates can be added to this table"
+#~ msgstr "只有学生和毕业生可以添加到此表中"
+
+#~ msgid "only graduate student can be added to this table"
+#~ msgstr "只有研究生可以添加到此表中"
+
+#, fuzzy
+#~| msgid "this person is not a valid graduate"
+#~ msgid "invalid person, person not a lecturer or graduate"
+#~ msgstr "此人不是有效的毕业生"
+
+#~ msgid "cannot add session because it is not current"
+#~ msgstr "无法添加会话，因为它不是当前的"
+
+#~ msgid "only old session can be added"
+#~ msgstr "只能添加旧会话"
+
+#~ msgid "Lecturer"
+#~ msgstr "讲师"
+
+#~ msgid "category"
+#~ msgstr "类别"
+
+#~ msgid "person"
+#~ msgstr "人"
+
+#~ msgid "level"
+#~ msgstr "等级"
+
+#, fuzzy
+#~| msgid "degree"
+#~ msgid "degrees"
+#~ msgstr "程度"
+
+#~ msgid "Degree"
+#~ msgstr "程度"
+
+#~ msgid "grant"
+#~ msgstr "授予"
+
+#~ msgid "Support"
+#~ msgstr "支持"
+
+#~ msgid "lecturer"
+#~ msgstr "讲师"
+
+#~ msgid "Session"
+#~ msgstr "会议"
+
+#~ msgid "session"
+#~ msgstr "会议"
+
+#~ msgid "Distinction"
+#~ msgstr "区别"
+
+#~ msgid "Very good"
+#~ msgstr "很好"
+
+#~ msgid "Poor"
+#~ msgstr "较差的"
+
+#~ msgid "Old Session"
+#~ msgstr "旧会话"
 
 #~ msgid "end"
 #~ msgstr "结尾"

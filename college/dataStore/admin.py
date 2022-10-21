@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.contrib.admin.models import LogEntry
-from .models import Person, Faculty, Student, Grad_Student, Degree, Researcher, Grant, Support, Department, College, Course, Section, CurrentSection
+from .models import Person, Faculty, Student, Grad_Student, Researcher, Grant, Department, College, Course, Section, CurrentSection
 from .form import StudentAdminForm, GradAdminForm, SectionAdminForm, CurrentSectionAdminForm, ResearcherAdminForm
 from django.utils.translation import gettext_lazy as _
 
@@ -84,7 +84,7 @@ class PersonAdmin(admin.ModelAdmin):
     
   date_hierarchy = 'time'
 
-  ordering = ['fullName']
+  ordering = ['firstName']
     
   list_display = ('ssn', 'fullName', 'sex', 'address')
   
@@ -106,7 +106,7 @@ class FacultyAdmin(admin.ModelAdmin):
   """
 
   fieldsets = (
-    ('Personal Info'', {
+    ('Personal Info', {
       'classes': ('extrapretty',),
       'fields': ('ssn', ('firstName', 'middleName', 'lastName'), 'birthday', 'sex')
     }),
@@ -124,7 +124,7 @@ class FacultyAdmin(admin.ModelAdmin):
     
   date_hierarchy = 'time'
 
-  ordering = ['fullName',]
+  ordering = ['firstName',]
   
   list_display = ('ssn', 'fullName', 'rank', 'officeAddress')
   
@@ -147,14 +147,14 @@ class StudentAdmin(admin.ModelAdmin):
   """
   
   fieldsets = (
-    ('Personal Info'', {
+    ('Personal Info', {
       'classes': ('extrapretty',),
       'fields': ('ssn', ('firstName', 'middleName', 'lastName'), 'birthday', 'sex')
     }),
     
     (None, {
       'classes': ('extrapretty',),
-      'fields':('level', ('minor', 'major'), ('Reg', 'trspt'))
+      'fields':('level', ('minor', 'major'), 'Reg', 'trspt')
     }),
     
     ('Residential Address', {
@@ -167,9 +167,7 @@ class StudentAdmin(admin.ModelAdmin):
 
   date_hierarchy = 'time'
 
-  ordering = ['fullName',]
-  
-  filter_vertical = ('Reg', 'trspt')
+  ordering = ['firstName',]
   
   list_display = ('ssn', 'fullName', 'level', 'minor', 'major')
   
@@ -192,7 +190,7 @@ class Grad_StudentAdmin(admin.ModelAdmin):
   """
   
   fieldsets = (
-    ('Personal Info'', {
+    ('Personal Info', {
       'classes': ('extrapretty',),
       'fields': ('ssn', ('firstName', 'middleName', 'lastName'), 'birthday', 'sex')
     }),
@@ -212,7 +210,7 @@ class Grad_StudentAdmin(admin.ModelAdmin):
 
   date_hierarchy = 'time'
 
-  ordering = ['fullName',]
+  ordering = ['firstName',]
   
   filter_vertical = ('committee',)
   
@@ -244,7 +242,7 @@ class ResearcherAdmin(admin.ModelAdmin):
   
   date_hierarchy = 'time'
 
-  ordering = ['fullName',]
+  ordering = ['firstName',]
 
   filter_vertical = ('support',)
   
@@ -368,6 +366,9 @@ class SectionAdmin(admin.ModelAdmin):
   
   list_display  = ('name', 'grade', 'year', 'qtr', 'teacher')
   
+  #list_filter = ('qtr', 'grade')
+  search_fields = ('course__name',)
+  
   autocomplete_fields = ['course', 'teacher']
   
 
@@ -389,6 +390,8 @@ class CurrentSectionAdmin(admin.ModelAdmin):
   date_hierarchy = 'time'
   
   list_display  = ('name', 'year', 'qtr', 'teacher')
+  
+  search_fields = ('course__name',)
   
   autocomplete_fields = ['course', 'teacher']
   
