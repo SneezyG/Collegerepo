@@ -13,13 +13,4 @@ Internationalisation.
 Interface customization.
 
 
-There are three group of user for this application, each group with it designated list of permission:
-
-Admin(the superuser) -> have all permission, can add change, view and delete data in any table except for logging, where superuser only have view permission.
-
-Editor -> have add, change, view and delete permission on selected tables.
-
-Attendant -> only have view permission on selected tables.
-
-
 
