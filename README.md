@@ -1,7 +1,6 @@
 # College
-A database application using a typical college schema.
-
-For this database application, consider a UNIVERSITY database that keeps track of students and their majors, transcripts, and registration as well as of the university’s course offerings. The database also keeps track of the sponsored research projects of faculty/graduate students and so on.
+A database application.
+For this database application, consider a UNIVERSITY datastore where information about students, lecturers, departments and falculties are stored.
 
 
 Shipped with this database application are these core functionalities:
@@ -12,16 +11,16 @@ Interface customization.
 
 
 
-I seeded this application with 3 users, their username and password is below.
+I seeded this application with 3 users and two groups, their username and password is below.
 
-admin: gsuwjsbbd7272
-This user is a superuser 
-Email = ahmadgbolly97@gmail.com
+GROUPS: Editor and Attendant
 
-editor1: syeoj£+0912
+USERS:
+admin: gsuwjsbbd7272  
 
-attendant1: hanwue72821
-attendant2: wyeujs27ysh
+editor01: syeoj£+0912
+
+attendant01: hanwue72821
 
 
 

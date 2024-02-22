@@ -1,24 +1,15 @@
 from django.db import models
-from datetime import date
 from django.utils.translation import gettext_lazy as _
 
-currentYear = date.today().year
-currentMonth = date.today().month
-quater = {
-  "1": [1, 2, 3],
-  "2": [4, 5, 6],
-  "3": [7, 8, 9],
-  "4": [10, 11, 12]
-}
 
 # Create your models here.
 
 class Person(models.Model):
   
   """
-  Stores a single person data. 
+  Stores person data. 
   
-  it is a generalization of :model:`dataStore.Faculty` and :model:`dataStore.Student`.
+  it is a generalization of :model:`dataStore.Lecturer` and :model:`dataStore.Student`.
   """
   
   sexType = (
@@ -27,15 +18,14 @@ class Person(models.Model):
       ('P', _('private')),
     )
     
-  ssn = models.CharField(max_length=11, primary_key=True, verbose_name=_('social security number'))
-  firstName = models.CharField(max_length=30, verbose_name=_('first name'))
-  middleName = models.CharField(max_length= 30,
+  first_name = models.CharField(max_length=30, verbose_name=_('first name'))
+  middle_name = models.CharField(max_length= 30,
   verbose_name=_('middle name')) 
-  lastName = models.CharField(max_length=30, verbose_name=_('last name'))
+  last_name = models.CharField(max_length=30, verbose_name=_('last name'))
   birthday = models.DateField(verbose_name=_('birthday'))
   sex = models.CharField(max_length=1, choices=sexType, verbose_name=_('sex'))
-  aptNo = models.IntegerField(verbose_name=_('apartment number'))
-  laneNo = models.IntegerField(verbose_name=_('lane number'))
+  apt_no = models.IntegerField(verbose_name=_('apartment number'))
+  lane_no = models.IntegerField(verbose_name=_('lane number'))
   street = models.CharField(max_length=30, verbose_name=_('street'))
   city = models.CharField(max_length=30, verbose_name=_('city'))
   state = models.CharField(max_length=30, verbose_name=_('state'))
@@ -46,7 +36,7 @@ class Person(models.Model):
   def fullName(self):
     "Returns the person's full name."
     verbose_name=_('full name')
-    fullname = '%s %s %s' % (self.firstName, self.middleName, self.lastName)
+    fullname = '%s %s %s' % (self.first_name, self.middle_name, self.last_name)
     return fullname.upper()
     
     
@@ -58,7 +48,7 @@ class Person(models.Model):
   def address(self):
     "Return the address of the person."
     verbose_name=_('address')
-    address = 'no %s, lane %s, %s, %s, %s' % (self.aptNo, self.laneNo, self.street, self.city, self.state)
+    address = 'no %s, lane %s, %s, %s, %s' % (self.apt_no, self.lane_no, self.street, self.city, self.state)
     return address.title()
     
   class Meta:
@@ -68,12 +58,14 @@ class Person(models.Model):
    
    
     
-class Faculty(Person):
+class Lecturer(Person):
   
   """
-  Stores a single Faculty member data, 
+  Stores Lecturers data, 
   
   it is a specialization of :model:`dataStore.Person`.
+  
+  It is related to :model:`dataStore.Department` through department relationship(many to one).
   """
   
   rankType = (
@@ -96,8 +88,9 @@ class Faculty(Person):
   rank = models.CharField(max_length=3,
        choices=rankType, verbose_name=_('rank'))
   salary = models.CharField(max_length=3, choices=salaryType, verbose_name=_('salary'))
-  officeAddress = models.CharField(max_length=50, verbose_name=_('office address'))
-  officePhone = models.CharField(max_length=15, verbose_name=_('office phone'))
+  office_address = models.CharField(max_length=50, verbose_name=_('office address'))
+  office_phone = models.CharField(max_length=15, verbose_name=_('office phone'))
+  department = models.ForeignKey("Department",  related_name="lecturers", verbose_name=_('department'), on_delete=models.SET_NULL, null=True, blank=True,)
   
   def __str__(self):
     fullname = '%s(%s)' % (self.fullName(), self.get_rank_display())
@@ -105,7 +98,7 @@ class Faculty(Person):
   
       
   class Meta:
-    verbose_name=_('Faculty')
+    verbose_name=_('Lecturer')
   
    
 
@@ -113,15 +106,11 @@ class Faculty(Person):
 class Student(Person):
   
    """
-    Stores a single student data.
+    Stores students data.
     
     It is a specialization of :model:`dataStore.Person`.
 
     It is related to :model:`dataStore.Department` through minor and major relationship(many to one).
-    
-    It is related to :model:`dataStore.CurrentSection` through registered courses relationship(many to many).
-
-    It is related to :model:`dataStore.Section` through transcript relationship(many to many).
     
     A student can't have same department as a minor and major at the same time.
     
@@ -139,8 +128,6 @@ class Student(Person):
        choices=clsType, verbose_name=_('Class'))
    minor = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, blank=True, related_name="minor_students", verbose_name=_('minor'))
    major = models.ForeignKey("Department", on_delete=models.SET_NULL, null=True, blank=True, related_name="major_students", verbose_name=_('major'))
-   Reg = models.ManyToManyField("CurrentSection", related_name="registered_students", verbose_name=_('Registered_courses'))
-   trspt = models.ManyToManyField("Section", related_name="students", verbose_name=_('transcript'))
    
    
    def __str__(self):
@@ -154,141 +141,21 @@ class Student(Person):
  
        
 
-class Grad_Student(Student):
-  
-  """
-    Stores a single graduate student data.
-    
-    It is a specialization of :model:`dataStore.Student`.
-    
-    It is related to :model:`dataStore.Faculty` through advisor(many to one) and thesis committee(many to many) relationships
-  """
-  
-  degType = (
-      ("Asc", _("Associate degree")),
-      ("Bch", _("Bachelor's degree")),
-      ("Mas", _("Master's degree")),
-      ("Doc", _("Doctoral degree"))
-    )
-    
-  clgType = (
-      ("Sci", _("Science")),
-      ("Eng", _("Engineering")),
-      ("Agric", _("Agriculture")),
-      ("Med", _("Medicine")),
-      ("Econ", _("Economic")),
-      ("Gns", _("General studies"))
-    )
-    
-  college = models.CharField(max_length=5, choices=clgType, verbose_name=_('college'))
-  degree = models.CharField(max_length=3, 
-        choices=degType, verbose_name=_('degree'))
-  year = models.IntegerField(verbose_name=_('year'))
-  advisor = models.ForeignKey(Faculty, on_delete=models.SET_NULL, null=True, blank=True, related_name="advisee", verbose_name=_('advisor'))
-  committee = models.ManyToManyField(Faculty, related_name="thesis_student", verbose_name=_('thesis committee'))
- 
- 
-  def __str__(self):
-      fullname = '%s(%s)' % (self.fullName(), self.get_degree_display())
-      return fullname.title()
-      
-  def Degree(self):
-    text = '%s in %s(year: %s)' % (self.get_degree_display(), self.get_college_display(), self.year)
-    return text
-    
-      
-  class Meta:
-     verbose_name=_('Graduate')
-  
-  
-  
-  
-  
-
-class Researcher(models.Model):
-  
-  """
-  Store a single researcher data.
-  
-  It is the union of :model:`dataStore.Faculty` and :model:`dataStore.Grad_Student`.
-  
-  It is related to :model:`dataStore.Grant` through support relationship(many to many).
-
-  """
-  
-  ssn = models.CharField(max_length=11, primary_key=True, verbose_name=_('social security number'))
-  firstName = models.CharField(max_length=30, verbose_name=_('first name'))
-  middleName = models.CharField(max_length= 30,
-  verbose_name=_('middle name')) 
-  lastName = models.CharField(max_length=30, verbose_name=_('last name'))
-  support = models.ManyToManyField("Grant", verbose_name=_('support'))
-  time = models.DateTimeField(auto_now_add=True)
-  
-  
-  def fullName(self):
-    "Returns the researcher's full name."
-    verbose_name=_('full name')
-    fullname = '%s %s %s' % (self.firstName, self.middleName, self.lastName)
-    return fullname.upper()
-    
-  def __str__(self):
-    fullname = self.fullName()
-    return fullname.title()
-        
-      
-  class Meta:
-    verbose_name=_('Researcher')
-        
-  
-  
-  
-        
-class Grant(models.Model):
-  
-  """
-  This store a single grant data. 
-  
-  It is related to :model:`dataStore.Faculty` through investigator relationship(many to one).
-  """
-  
-  title = models.CharField(max_length=30, verbose_name=_('title'))
-  agency = models.CharField(max_length=30, verbose_name=_('agency'))
-  investigator = models.ForeignKey(Faculty, 
-      on_delete=models.CASCADE, verbose_name=_('investigator'))
-  start = models.DateField(verbose_name=_('start date'))
-  end = models.DateField(verbose_name=_('end date'))
-  spend = models.IntegerField(verbose_name=_('%time spend'))
-  time = models.DateTimeField(auto_now_add=True)
-      
-  def __str__(self):
-    name = '%s(%s)' % (self.title, self.agency)
-    return name.title()
-    
-  class Meta:
-    verbose_name=_('Grant')
-      
-      
-
-
 
 
 class Department(models.Model):
   
   """
-  Store a single department data.
+  Store departments data.
   
-  It is related to :model:`dataStore.Faculty` through belong(many to many) and HOD(one to one) relationship.
-  
-  It is related to :model:`dataStore.College` through college relationship(many to one).
+  It is related to :model:`dataStore.Faculty` through faculty relationship(many to one).
   
   """
   
   name = models.CharField(max_length=30, primary_key=True, verbose_name=_('name'))
-  dphone = models.CharField(max_length=30, verbose_name=_('phone'))
-  office = models.IntegerField(verbose_name=_('office number'))
-  belongs = models.ManyToManyField(Faculty, related_name="departments", verbose_name=_('belongs'))
-  HOD = models.OneToOneField(Faculty, related_name="HOD_of", on_delete=models.CASCADE, verbose_name=_('Head of department'))
-  college = models.ForeignKey("College", on_delete=models.CASCADE, related_name="departments", verbose_name=_('college'))
+  phone_no = models.CharField(max_length=30, verbose_name=_('phone'))
+  office_no = models.IntegerField(verbose_name=_('office number'))
+  faculty = models.ForeignKey("Faculty", on_delete=models.CASCADE, related_name="departments", verbose_name=_('faculty'))
   time = models.DateTimeField(auto_now_add=True)
   
   
@@ -301,10 +168,10 @@ class Department(models.Model):
  
  
     
-class College(models.Model):
+class Faculty(models.Model):
   
   """
-  Store a single college data.
+  Store faculties data.
   
   It have a unique field "dean of the college".
   """
@@ -318,127 +185,18 @@ class College(models.Model):
       ("Gns", _("General studies"))
     )
   
-  name = models.CharField(max_length=30, primary_key=True, choices=clgType, verbose_name=_('college'))
+  name = models.CharField(max_length=30, primary_key=True, choices=clgType, verbose_name=_('name'))
   dean = models.CharField(max_length=30, unique=True, verbose_name=_('dean'))
-  office = models.IntegerField(verbose_name=_("office number"))
+  phone_no = models.CharField(max_length=30, verbose_name=_('phone'))
   time = models.DateTimeField(auto_now_add=True)
   
   
   def __str__(self):
-    text = "college of %s" % (self.get_name_display())
+    text = "faculty of %s" % (self.get_name_display())
     return text
   
   class Meta:
-    verbose_name=_('College')
-    
-    
-  
-  
-class Course(models.Model):
-  
-  """
-  
-  Store a single course data.
-  
-  It is related to :model:`dataStore.Department` through department relationship(many to one).
-
-  """
-  
-  code = models.CharField(max_length=30, primary_key=True, verbose_name=_('course code'))
-  name = models.CharField(max_length=30, unique=True, verbose_name=_('name'))
-  dept = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name=_('department'))
-  des = models.TextField(verbose_name=_('description'))
-  time = models.DateTimeField(auto_now_add=True)
-  
-  
-  def __str__(self):
-    text = "%s(%s)" % (self.name, self.code)
-    return text
-  
-  class Meta:
-    verbose_name=_('Course')
-    
-    
- 
-  
-class Section(models.Model):
-  
-  """
-  Store a particular Section versions of courses.
-  
-  It is related to :model:`dataStore.Course` through course relationship(many to one).
-  
-  It is related to :model:`dataStore.Researcher` through teacher relationship(many to one).
-  
-  Every Section object have a year field that can only range from 1990 to currentyear.
-   
-  where current year = date.today().year.
-  
-  """
-  
-  qtrType = (
-      ("1", _("First Quarter")),
-      ("2", _("Second Quarter")),
-      ("3", _("Third Quarter")),
-      ("4", _("Fourth Quarter"))
-    )
-  
-  gradeType = (
-      ("1", _("Excellent")),
-      ("2", _("Good")),
-      ("3", _("Pass")),
-      ("4", _("Fail"))
-    )
-    
-  year = models.IntegerField(verbose_name=_('year'))
-  qtr = models.CharField(max_length=1, choices=qtrType, verbose_name=_('quarter'))
-  grade = models.CharField(max_length=1, choices=gradeType, null=True, blank=True, verbose_name=_('grade'))
-  course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name=_('course'))
-  teacher = models.ForeignKey(Researcher, on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_('teacher'))
-  time = models.DateTimeField(auto_now_add=True)
-  
-  
-  def __str__(self):
-    sect = '%s (%s | grade: %s)' % (self.course.name, self.year, self.get_grade_display())
-    return sect
-
-  def name(self):
-    verbose_name=_('name')
-    return self.course.name.title()
- 
-      
-  class Meta:
-    verbose_name=_('Section')
-    
-    
- 
-    
-class CurrentSection(Section):
-  
-   """
-   Store the current Section version of courses.
-   
-   It is a specialization of :model:`dataStore.Section`
-   
-   A Section object must have it year field as currentyear before it can be added to this table.
-   
-   A Section object must have it quarter field
-     as currentQuarter of the year before it can be added to this table.
-     
-   Currentyear = data.today().year
-   CurrentQuarter = date.today()month in selected Quarter.
-   
-   """
-   
-   def __str__(self):
-     sect = '%s(%s)' % (self.course.name, self.course.code)
-     return sect
-  
-   class Meta:
-     verbose_name=_('Current Section')
-     
-     
-
+    verbose_name=_('Faculty')
   
 
     
