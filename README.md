@@ -11,16 +11,3 @@ Interface customization.
 
 
 
-I seeded this application with 3 users and two groups, their username and password is below.
-
-GROUPS: Editor and Attendant
-
-USERS:
-admin: gsuwjsbbd7272  
-
-editor01: syeoj£+0912
-
-attendant01: hanwue72821
-
-
-
